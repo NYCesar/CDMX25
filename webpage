@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mexico City Travel Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab-active { background-color: #0D9488; color: white; } /* Teal-700 */
+        .tab-inactive { background-color: #F3F4F6; color: #374151; } /* Gray-100, Gray-700 */
+        .nav-link-active { color: #0D9488; font-weight: 600; border-bottom: 2px solid #0D9488;}
+        .nav-link-inactive { color: #4B5563; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .card-link { color: #B45309; } /* Amber-700 for links */
+        .card-link:hover { color: #D97706; } /* Amber-600 for hover */
+        .section-title { color: #047857; } /* Emerald-700 */
+    </style>
+</head>
+<body class="bg-stone-100 text-gray-800">
+
+    <div class="container mx-auto p-4 max-w-6xl">
+        <header class="text-center py-8">
+            <h1 class="text-4xl font-bold text-teal-700">Mexico City Adventure Guide</h1>
+            <p class="text-lg text-gray-600 mt-2">Your interactive guide to the best of CDMX, curated from travel vlogs.</p>
+        </header>
+
+        <nav id="mainNav" class="bg-white shadow-md rounded-lg p-2 mb-8 flex flex-wrap justify-center space-x-1 sm:space-x-2">
+            <button data-target="home" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-active">🏠 Home</button>
+            <button data-target="eat" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">🍽️ Eat</button>
+            <button data-target="seeDo" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">🏞️ See & Do</button>
+            <button data-target="stay" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">🏨 Stay</button>
+            <button data-target="tips" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">💡 Travel Tips</button>
+        </nav>
+
+        <main id="contentArea">
+            <section id="home" class="content-section space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-semibold section-title mb-4">Welcome to Your Mexico City Guide!</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        Mexico City is a vibrant metropolis brimming with history, art, incredible food, and unique cultural experiences. This guide synthesizes recommendations from various travelogues to help you plan an unforgettable trip. Explore different categories using the navigation above to discover top spots for dining, sightseeing, accommodation, and essential travel tips.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold section-title mb-4">Recommendations Overview</h3>
+                    <p class="text-gray-700 mb-4">Here's a quick look at the number of curated recommendations available in each main category:</p>
+                    <div class="chart-container">
+                        <canvas id="recommendationsChart"></canvas>
+                    </div>
+                     <p class="text-sm text-gray-600 mt-4 text-center">This chart provides a visual summary of the diverse experiences awaiting you in Mexico City, based on the curated list in this guide. Use it to get a sense of the variety of options available as you plan your adventure!</p>
+                </div>
+            </section>
+
+            <section id="eat" class="content-section hidden space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-semibold section-title mb-4">Culinary Delights</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Mexico City's food scene is legendary, from world-class bakeries and coffee shops to iconic street tacos and innovative restaurants. This section helps you navigate the diverse culinary landscape. Use the filters below to explore specific categories.
+                    </p>
+                    <div id="eatSubNav" class="flex flex-wrap justify-center gap-2 mb-6">
+                        <button data-subtarget="all" class="subnav-link bg-teal-600 text-white py-2 px-4 rounded-md text-sm hover:bg-teal-700 transition-colors">All Food</button>
+                        <button data-subtarget="Breakfast & Coffee" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Breakfast & Coffee</button>
+                        <button data-subtarget="Tacos & Street Food" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Tacos & Street Food</button>
+                        <button data-subtarget="Refined Dining" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Refined Dining</button>
+                        <button data-subtarget="Bars & Speakeasies" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Bars & Speakeasies</button>
+                    </div>
+                    <div id="eatContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        </div>
+                </div>
+            </section>
+
+            <section id="seeDo" class="content-section hidden space-y-6">
+                 <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-semibold section-title mb-4">Culture & Experiences</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Immerse yourself in Mexico City's rich culture, history, and vibrant arts scene. From world-renowned museums and ancient ruins to lively parks and unique local tours, there's an abundance of experiences to discover. Filter by interest below.
+                    </p>
+                    <div id="seeDoSubNav" class="flex flex-wrap justify-center gap-2 mb-6">
+                        <button data-subtarget="all" class="subnav-link bg-teal-600 text-white py-2 px-4 rounded-md text-sm hover:bg-teal-700 transition-colors">All Activities</button>
+                        <button data-subtarget="Art, History & Architecture" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Art, History & Architecture</button>
+                        <button data-subtarget="Parks & Urban Escapes" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Parks & Urban Escapes</button>
+                        <button data-subtarget="Unforgettable Adventures" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Unforgettable Adventures</button>
+                    </div>
+                    <div id="seeDoContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        </div>
+                </div>
+            </section>
+
+            <section id="stay" class="content-section hidden space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-semibold section-title mb-4">Accommodation Options</h2>
+                     <p class="text-gray-700 leading-relaxed mb-6">
+                        Finding the right place to stay is key to a great trip. Mexico City offers a range of accommodations, from unique loft apartments to charming boutique hotels. Here are some highlighted options to consider for your visit.
+                    </p>
+                    <div id="stayContent" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        </div>
+                </div>
+            </section>
+
+            <section id="tips" class="content-section hidden space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-semibold section-title mb-4">Key Considerations & Travel Tips</h2>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        To make the most of your Mexico City adventure, keep these practical tips in mind. They cover everything from culinary exploration to booking popular attractions, helping you navigate the city smoothly.
+                    </p>
+                    <div id="tipsContent" class="space-y-4 text-gray-700">
+                        <div class="p-4 bg-amber-50 rounded-lg border border-amber-200">
+                            <h3 class="font-semibold text-amber-800 mb-1">Embrace Culinary Diversity:</h3>
+                            <p>Explore both renowned fine dining and authentic street food. Keep small denominations of pesos for cash-only street vendors.</p>
+                        </div>
+                        <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
+                            <h3 class="font-semibold text-sky-800 mb-1">Plan Ahead for Popular Spots:</h3>
+                            <p>For highly acclaimed restaurants, bars (e.g., Handshake Speakeasy), and museums (e.g., Frida Kahlo Museum), secure reservations well in advance, especially during peak seasons.</p>
+                        </div>
+                        <div class="p-4 bg-lime-50 rounded-lg border border-lime-200">
+                            <h3 class="font-semibold text-lime-800 mb-1">Be Prepared for Unique Access:</h3>
+                            <p>For exclusive architectural tours (e.g., Luis Barragán homes) or niche local spots, verify booking procedures, payment methods (some are cash-only), and any unique conditions.</p>
+                        </div>
+                        <div class="p-4 bg-violet-50 rounded-lg border border-violet-200">
+                            <h3 class="font-semibold text-violet-800 mb-1">Consider Guided Tours:</h3>
+                            <p>For experiences like Lucha Libre, market explorations, or excursions to Teotihuacan and Xochimilco, reputable tour operators can streamline logistics and enhance understanding.</p>
+                        </div>
+                         <div class="p-4 bg-rose-50 rounded-lg border border-rose-200">
+                            <h3 class="font-semibold text-rose-800 mb-1">Leverage Online & Local Info:</h3>
+                            <p>While online platforms are useful, some local gems may have limited digital presence. Complement research with local inquiries for authentic discoveries.</p>
+                        </div>
+                        <div class="p-4 bg-gray-100 rounded-lg border border-gray-300">
+                            <h3 class="font-semibold text-gray-800 mb-1">General Advice from Travelers:</h3>
+                            <ul class="list-disc list-inside space-y-1 pl-2">
+                                <li>When visiting, remember you're a guest. Try to speak the language, support local businesses, and be respectful.</li>
+                                <li>Mexico City's shopping scene is amazing, with variety from trinkets to high-end items, especially in areas like Roma Norte.</li>
+                                <li>The city is vast; allow time for travel between neighborhoods.</li>
+                                <li>Many places are cash-only, especially smaller vendors and some tours.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center py-8 mt-12 border-t border-gray-300">
+            <p class="text-gray-600">&copy; <span id="currentYear"></span> Mexico City Travel Guide. Curated with care.</p>
+        </footer>
+    </div>
+
+    <script>
+        const recommendations = [
+            {
+                id: 'dib-experience', name: 'DIB the Experience', category: 'Stay', subCategory: null,
+                description: 'A "beautiful" three-story loft apartment, noted for its affordability. Offers free WiFi, private parking, and fitness room access.',
+                address: '148 Mérida, Mexico City', website: null, sourceQuote: 'Affordable three-story loft.', michelin: false
+            },
+            {
+                id: 'hotel-san-fernando', name: 'Hotel San Fernando', category: 'Stay', subCategory: null,
+                description: 'A "new boutique hotel in the heart of Condesa" that "won\'t break the bank." Features "super super cute" rooms and an "adorable rooftop." MICHELIN Key award recipient.',
+                address: 'Iztaccihuatl 54, Col. Hipodromo Condesa', website: null, sourceQuote: 'Boutique hotel, adorable rooftop.', michelin: true
+            },
+            {
+                id: 'forte', name: 'Forte', category: 'Eat', subCategory: 'Breakfast & Coffee',
+                description: 'Praised as a "beautiful coffee shop and bakery" known for its "fantastic homemade bread."',
+                address: 'C. Querétaro 116, Roma Norte', website: null, sourceQuote: 'Fantastic homemade bread.', michelin: false
+            },
+            {
+                id: 'quentin', name: 'Quentin', category: 'Eat', subCategory: 'Breakfast & Coffee',
+                description: 'Situated on a "gorgeous tree-lined street," Quentin is a "perfect spot to meet friends" and offers "really great coffee." Considered a "quintessential coffee hub."',
+                address: 'Av. Álvaro Obregón 64, Roma Nte.', website: null, sourceQuote: 'Really great coffee, quintessential hub.', michelin: false
+            },
+            {
+                id: 'raku', name: 'Raku', category: 'Eat', subCategory: 'Breakfast & Coffee',
+                description: 'A Japanese coffee shop highlighted for serving the "best cold brew." Known for Vietnamese coffee, Japanese matcha, and "fluffy bread sandos."',
+                address: 'Roma neighborhood', website: 'https://rakucafe.com/', sourceQuote: 'Best cold brew.', michelin: false
+            },
+            {
+                id: 'cicatriz', name: 'Cicatriz (Sycatras)', category: 'Eat', subCategory: 'Breakfast & Coffee',
+                description: 'Recognized for its beautiful space, "great brunch," and transformation into a bar. Pastries described as "so so delicious," even "better pastries than I had in Paris." Vegetable-forward menu, natural wine.',
+                address: null, website: 'https://cicatrizcafe.com/', sourceQuote: 'Better pastries than Paris.', michelin: false
+            },
+            {
+                id: 'panaderia-rosetta', name: 'Panadería Rosetta', category: 'Eat', subCategory: 'Breakfast & Coffee',
+                description: 'A "famous bakery in Romanorte, known for their artisanal pastries," particularly renowned for its "guava-Danish." Also recommended for sandwiches. Parisian-style, consistently draws lines.',
+                address: 'Colima 179, Roma Nte.', website: null, sourceQuote: 'Famous for guava-Danish.', michelin: false
+            },
+            {
+                id: 'odette', name: 'O\'Dette', category: 'Eat', subCategory: 'Breakfast & Coffee',
+                description: 'Suggested as a first stop for a "pastry crawl." Boulangerie-style space in Lomas de Chapultepec, highly regarded croissants and kouign-amanns.',
+                address: 'Lomas de Chapultepec', website: null, sourceQuote: 'Pastry crawl starter.', michelin: false
+            },
+            {
+                id: 'jeanies-street-tacos', name: 'Jeanie\'s Street Tacos', category: 'Eat', subCategory: 'Tacos & Street Food',
+                description: 'An "absolute must" for tacos, "some of the best tacos I\'ve ever had in my life." A local friend\'s favorite, Jeanie herself makes all the tacos.',
+                address: null, website: null, sourceQuote: 'Best tacos I\'ve ever had.', michelin: false
+            },
+            {
+                id: 'jennys-quesadillas', name: 'Jenny\'s Quesadillas', category: 'Eat', subCategory: 'Tacos & Street Food',
+                description: 'Though "touristy," this street cart "never disappoints" and is a "not to be missed" spot. Mouthwatering, freshly made blue corn tortillas, wide range of vegetarian options. Fast service, affordable.',
+                address: 'Mérida 83, Col. Roma Norte', website: null, sourceQuote: 'Never disappoints, dream about these.', michelin: false
+            },
+            {
+                id: 'gracias-madre-tacos', name: 'Gracias Madre (Tacos)', category: 'Eat', subCategory: 'Tacos & Street Food',
+                description: 'A vegan taco spot, highly recommended even for non-vegans, "spectacular." 100% plant-based and organic, Mexican food inspired by traditional family recipes.',
+                address: null, website: 'https://graciasmadre.co/', sourceQuote: 'Spectacular vegan tacos.', michelin: false
+            },
+            {
+                id: 'carinito-tacos', name: 'Cariñito Tacos', category: 'Eat', subCategory: 'Tacos & Street Food',
+                description: 'Recommended as part of a Lucha Libre tour, "one of the best taco spots." Trendy, hole-in-the-wall in Roma Norte with innovative meat and veggie tacos. Michelin Guide recognition.',
+                address: 'Roma Norte', website: 'https://www.instagram.com/carinitotacos/', sourceQuote: 'One of the best taco spots.', michelin: true
+            },
+            {
+                id: 'taqueria-los-cocuyos', name: 'Taquería Los Cocuyos', category: 'Eat', subCategory: 'Tacos & Street Food',
+                description: 'Anthony Bourdain\'s "favourite taco place in Mexico City," famous for "tacos di sui-dero." Beloved for rich, flavorful meat tacos. Michelin Guide Bib Gourmand.',
+                address: 'Calle Bolívar 56, Historic Center', website: null, sourceQuote: 'Bourdain\'s favourite.', michelin: true
+            },
+            {
+                id: 'el-pescadito', name: 'El Pescadito', category: 'Eat', subCategory: 'Tacos & Street Food',
+                description: 'Known for "Baja style tacos" with fillings like "fresh fish, shrimp," and generous toppings. Specializes in tacos de marlin and tacochango.',
+                address: 'Calle Atlixco 38', website: null, sourceQuote: 'Baja style seafood tacos.', michelin: false
+            },
+            {
+                id: 'tacos-orinoco', name: 'Tacos Orinoco', category: 'Eat', subCategory: 'Tacos & Street Food',
+                description: 'Recommended for "northern Mexican style tacos."',
+                address: null, website: null, sourceQuote: 'Northern Mexican style.', michelin: false
+            },
+            {
+                id: 'campo-baja', name: 'Campo Baja', category: 'Eat', subCategory: 'Refined Dining',
+                description: 'Praised for "by far the freshest and most flavorful seafood dishes" and being "pretty affordable." Inspired by Baja California, fresh, high-quality seafood. Michelin Guide recommended.',
+                address: 'Roma Norte', website: 'https://campobaja.mx/', sourceQuote: 'Freshest seafood, affordable.', michelin: true
+            },
+            {
+                id: 'la-unica', name: 'La Unica', category: 'Eat', subCategory: 'Refined Dining',
+                description: 'A "favourite" dinner spot with "phenomenal food, cocktails atmosphere." Located in Polanco, showcases "Northern Mexico\'s diverse cuisine."',
+                address: 'Polanco', website: 'https://launica.mx/', sourceQuote: 'Phenomenal food & atmosphere.', michelin: false
+            },
+            {
+                id: 'villa-sol', name: 'Villa Sol', category: 'Eat', subCategory: 'Refined Dining',
+                description: 'A "little dumpling and noodle shop serving up incredible natural wine," with "cute owners" and food that "really blew me away." Order everything to share.',
+                address: null, website: null, sourceQuote: 'Incredible natural wine & dumplings.', michelin: false
+            },
+            {
+                id: 'handshake-speakeasy', name: 'Handshake Speakeasy (Haya)', category: 'Eat', subCategory: 'Bars & Speakeasies',
+                description: '"Speakeasy dinner spot," a "hidden gem," "so sexy," offering "fab drinks" and "creative and globally inspired food." Ranked "No. 1 bar in North America" and "World\'s Best Bar." Reservations highly recommended (2 weeks+).',
+                address: null, website: 'https://handshake.bar/', sourceQuote: 'World\'s Best Bar, book ahead!', michelin: true
+            },
+            {
+                id: 'taberna-mx', name: 'Taberna', category: 'Eat', subCategory: 'Refined Dining',
+                description: 'Located in Roma Norte, might appear "unassuming" but considered "one of the most beautiful restaurants in the world" by one reviewer. "Really great food and service." Mediterranean cuisine.',
+                address: 'Roma Norte', website: 'https://taverna.mx/', sourceQuote: 'Beautiful restaurant, great food.', michelin: false
+            },
+            {
+                id: 'entremar', name: 'Entremar', category: 'Eat', subCategory: 'Refined Dining',
+                description: '"Contremar\'s slept-on sister restaurant," offers the "same menu" but "way easier to get a rest here." Fantastic choice for fresh seafood.',
+                address: null, website: 'https://entremar.com.mx/', sourceQuote: 'Contremar\'s sister, easier reservations.', michelin: false
+            },
+            {
+                id: 'salon-palomilla', name: 'Salon Palomilla', category: 'Eat', subCategory: 'Bars & Speakeasies',
+                description: 'Perfect for "sunset time drinks," a "beautiful, ruthless bar" that features a "D.J. set as soon as the sun goes down." Popular cocktail bar in Roma Norte.',
+                address: 'Avenida Yucatán 84c, Roma Norte', website: null, sourceQuote: 'Sunset drinks, DJ sets.', michelin: false
+            },
+            {
+                id: 'general-cocktail-bars', name: 'General Cocktail Scene', category: 'Eat', subCategory: 'Bars & Speakeasies',
+                description: 'The city boasts "many cocktail bars listed in the top fifty bars in the world," offering abundant opportunities for sophisticated drinks and mezcal tastings.',
+                address: 'Various', website: null, sourceQuote: 'Top 50 bars globally.', michelin: false
+            },
+            {
+                id: 'mooney-gallery', name: 'Mooney Gallery', category: 'See & Do', subCategory: 'Art, History & Architecture',
+                description: 'A "must-visit" for art enthusiasts, showcasing "so many incredible local artists." Excellent place to discover contemporary Mexican art.',
+                address: null, website: 'https://moonigallery.com/', sourceQuote: 'Incredible local artists.', michelin: false
+            },
+            {
+                id: 'museum-anthropology', name: 'Museum of Anthropology (Museo Nacional de Antropología)', category: 'See & Do', subCategory: 'Art, History & Architecture',
+                description: 'Essential for a "craft course in their history," allowing visitors to "dive into Mexico\'s ancient civilizations with artifacts." Largest and most visited museum in Mexico.',
+                address: null, website: 'https://mna.inah.gob.mx/', sourceQuote: 'Dive into ancient civilizations.', michelin: false
+            },
+            {
+                id: 'frida-kahlo-museum', name: 'Frida Kahlo Museum (Casa Azul)', category: 'See & Do', subCategory: 'Art, History & Architecture',
+                description: 'Located in Coyoacán, Frida Kahlo\'s former home. "Delve into Frida\'s life and art." Advance reservations highly recommended as tickets sell out fast.',
+                address: 'Coyoacán', website: 'https://www.museofridakahlo.org.mx/', tickets: 'https://www.boletosfridakahlo.org/', sourceQuote: 'Book tickets in advance!', michelin: false
+            },
+            {
+                id: 'chapultepec-castle', name: 'Chapultepec Castle and Park', category: 'See & Do', subCategory: 'Art, History & Architecture',
+                description: 'Features one of Latin America\'s largest parks, home to a historic castle on a hilltop offering "panoramic views and opulent interior." Rich with Mexican history, houses National History Museum.',
+                address: 'Chapultepec Park', website: 'https://mexicocity.cdmx.gob.mx/venues/chapultepec-castle/', sourceQuote: 'Panoramic views, opulent interior.', michelin: false
+            },
+            {
+                id: 'zocalo-cathedral', name: 'Zocalo & Cathedral', category: 'See & Do', subCategory: 'Art, History & Architecture',
+                description: 'Central landmarks vividly showcasing "the city\'s Aztec and colonial heritage." Historical heart of Mexico City, often explored via walking tours.',
+                address: 'Centro Histórico', website: null, sourceQuote: 'Aztec and colonial heritage.', michelin: false
+            },
+            {
+                id: 'museo-soumaya', name: 'Museo Soumaya', category: 'See & Do', subCategory: 'Art, History & Architecture',
+                description: 'In Polanco, this striking museum houses "over sixty thousand works from thirty centuries of art." Unique architecture.',
+                address: 'Polanco', website: 'https://museosoumaya.org/', sourceQuote: 'Over 60,000 works of art.', michelin: false
+            },
+            {
+                id: 'zona-maco-material-art-fair', name: 'Zona Maco & Material Art Fair', category: 'See & Do', subCategory: 'Art, History & Architecture',
+                description: 'If visiting during these annual events, they offer a fantastic opportunity to experience Mexico City\'s vibrant "contemporary art" scene. Major international art platforms.',
+                address: 'Varies (Annual Events)', website: 'https://zsonamaco.com/', website2: 'https://material-fair.com/', sourceQuote: 'Vibrant contemporary art scene.', michelin: false
+            },
+            {
+                id: 'luis-barragan-homes', name: 'Luis Barragán Homes (Casa Pedregal, Casa Gilardi)', category: 'See & Do', subCategory: 'Art, History & Architecture',
+                description: 'Discover the stunning, serene architecture of "famous Mexican architect" Luis Barragán. Private residences requiring appointment via email and cash payment for tours. (Note: Report mentioned Casa Schulardi, but Casa Gilardi is more commonly associated with Barragán tours. Casa Luis Barragán is his own house/studio).',
+                address: 'Varies', website: 'https://casaluisbarragan.org/', sourceQuote: 'Appointment & cash only.', michelin: false
+            },
+            {
+                id: 'plaza-rio-de-janeiro', name: 'Plaza Rio de Janeiro', category: 'See & Do', subCategory: 'Parks & Urban Escapes',
+                description: 'A pleasant public park in Roma Norte, ideal for enjoying a pastry and coffee on a "sun-soaked bench." Features a replica of Michelangelo’s David.',
+                address: 'Roma Norte', website: 'https://programadestinosmexico.com/en/plaza-rio-de-janeiro-cdmx/', sourceQuote: 'Sun-soaked bench, David replica.', michelin: false
+            },
+            {
+                id: 'parque-mexico', name: 'Parque Mexico', category: 'See & Do', subCategory: 'Parks & Urban Escapes',
+                description: 'This "beautiful tree-line park in Condesa" is a "wonderful place to people watch" and find "tree look nooks" for relaxation. A "calm, verdant oasis" and "vibrant social hub."',
+                address: 'Condesa', website: 'https://mexiconewsdaily.com/lifestyle/10-things-you-didnt-know-about-parque-mexico-mexico-city/', sourceQuote: 'People watch, tree nooks.', michelin: false
+            },
+            {
+                id: 'el-pendulo', name: 'El Pendulo (Bookstore Cafe)', category: 'See & Do', subCategory: 'Parks & Urban Escapes',
+                description: 'Located near Parque Mexico, this "bookstore cafe with a great vibe" is perfect for picking up a book and enjoying it in the park. Significant cultural center with multiple branches.',
+                address: 'Near Parque Mexico (multiple locations)', website: 'https://pendulo.com/', sourceQuote: 'Bookstore cafe, great vibe.', michelin: false
+            },
+            {
+                id: 'lucha-libre-tour', name: 'Lucha Libre Tour', category: 'See & Do', subCategory: 'Unforgettable Adventures',
+                description: 'Experience this "unique mix of sport, theater, and tradition." Highly recommend booking a tour (e.g., via Airbnb experiences) that often includes pre-show tacos and mezcal.',
+                address: 'Arena México / Arena Coliseo', website: 'https://estacionmexico.com.mx/tours/lucha-libre-tour-in-mexico-city/', website2:'https://www.getyourguide.com/mexico-city-l276/tours-tc2/?q=Lucha+Libre', sourceQuote: 'Sport, theater, tradition.', michelin: false
+            },
+            {
+                id: 'market-tour', name: 'Market Tour', category: 'See & Do', subCategory: 'Unforgettable Adventures',
+                description: '"One of my favourite food experiences I\'ve ever done." Tours visit "multiple different markets" and offer a chance to try "many local foods," providing "incredible value."',
+                address: 'Various Markets', website: 'https://www.byfood.com/mexico-city/food-tours/downtown-mexican-food-and-market-tour-mexico-city-2068', sourceQuote: 'Favourite food experience.', michelin: false
+            },
+            {
+                id: 'xochimilco-tour', name: 'Xochimilco Tour', category: 'See & Do', subCategory: 'Unforgettable Adventures',
+                description: 'Float along ancient canals on "colourful trajineras" (traditional boats), enjoying "snacks, live Mariachi," and learning about the area\'s history. Book via Airbnb experiences or tour operators.',
+                address: 'Xochimilco', website: 'https://www.turibus.com.mx/en/cdmx/turitour/xochimilco-coyoacan-stadium-tour', website2:'https://www.getyourguide.com/mexico-city-l276/tours-tc2/?q=Xochimilco', sourceQuote: 'Colorful boats, Mariachi.', michelin: false
+            },
+            {
+                id: 'teotihuacan-tour', name: 'Teotihuacan Tour', category: 'See & Do', subCategory: 'Unforgettable Adventures',
+                description: 'Visit the awe-inspiring "City of the Gods" with its Pyramids of the Sun and Moon. Hot air balloon rides at sunrise are popular. Tours often include transport and guided visits.',
+                address: 'Teotihuacan', website: 'https://teotihuacantours.com/', sourceQuote: 'City of the Gods, pyramids.', michelin: false
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainNav = document.getElementById('mainNav');
+            const contentSections = document.querySelectorAll('.content-section');
+            const eatSubNav = document.getElementById('eatSubNav');
+            const seeDoSubNav = document.getElementById('seeDoSubNav');
+            const eatContent = document.getElementById('eatContent');
+            const seeDoContent = document.getElementById('seeDoContent');
+            const stayContent = document.getElementById('stayContent');
+            
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            function displayContent(targetId, subTarget = 'all', contentArea, dataCategory) {
+                const itemsToDisplay = recommendations.filter(item => {
+                    if (item.category !== dataCategory) return false;
+                    return subTarget === 'all' || item.subCategory === subTarget;
+                });
+
+                contentArea.innerHTML = itemsToDisplay.map(item => `
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-semibold text-teal-700 mb-2">${item.name} ${item.michelin ? '<span title="Michelin Mentioned/Rated">⭐</span>' : ''}</h3>
+                            ${item.subCategory ? `<p class="text-xs text-gray-500 uppercase tracking-wider mb-2">${item.subCategory.replace(/ & /g, ' &amp; ')}</p>` : ''}
+                            <p class="text-gray-700 mb-3 text-sm leading-relaxed">${item.description.replace(/ & /g, ' &amp; ')}</p>
+                            ${item.sourceQuote ? `<p class="text-sm text-amber-700 italic mb-3">"${item.sourceQuote.replace(/ & /g, ' &amp; ')}"</p>` : ''}
+                            ${item.address ? `<p class="text-sm text-gray-600 mb-1">📍 ${item.address.replace(/ & /g, ' &amp; ')}</p>` : ''}
+                        </div>
+                        <div class="mt-auto pt-3">
+                            ${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer" class="inline-block bg-amber-600 text-white text-xs py-2 px-3 rounded-md hover:bg-amber-700 transition-colors mr-2">🔗 Visit Website</a>` : ''}
+                            ${item.tickets ? `<a href="${item.tickets}" target="_blank" rel="noopener noreferrer" class="inline-block bg-sky-600 text-white text-xs py-2 px-3 rounded-md hover:bg-sky-700 transition-colors">🎟️ Book Tickets</a>` : ''}
+                            ${item.website2 ? `<a href="${item.website2}" target="_blank" rel="noopener noreferrer" class="inline-block bg-purple-600 text-white text-xs py-2 px-3 rounded-md hover:bg-purple-700 transition-colors">🔗 More Info</a>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+
+                if (itemsToDisplay.length === 0) {
+                    contentArea.innerHTML = `<p class="text-gray-600 col-span-full text-center">No recommendations found for this category/filter.</p>`;
+                }
+            }
+            
+            function updateNavLinks(navContainer, clickedButton) {
+                navContainer.querySelectorAll('button').forEach(btn => {
+                    btn.classList.remove('bg-teal-600', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                clickedButton.classList.add('bg-teal-600', 'text-white');
+                clickedButton.classList.remove('bg-gray-200', 'text-gray-700');
+            }
+
+            mainNav.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const targetId = e.target.dataset.target;
+                    contentSections.forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    document.getElementById(targetId).classList.remove('hidden');
+
+                    mainNav.querySelectorAll('button').forEach(btn => {
+                        btn.classList.remove('nav-link-active');
+                        btn.classList.add('nav-link-inactive');
+                    });
+                    e.target.classList.add('nav-link-active');
+                    e.target.classList.remove('nav-link-inactive');
+
+                    if (targetId === 'eat') displayContent(targetId, 'all', eatContent, 'Eat');
+                    if (targetId === 'seeDo') displayContent(targetId, 'all', seeDoContent, 'See & Do');
+                    if (targetId === 'stay') displayContent(targetId, 'all', stayContent, 'Stay');
+                }
+            });
+
+            eatSubNav.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const subTarget = e.target.dataset.subtarget;
+                    displayContent('eat', subTarget, eatContent, 'Eat');
+                    updateNavLinks(eatSubNav, e.target);
+                }
+            });
+
+            seeDoSubNav.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const subTarget = e.target.dataset.subtarget;
+                    displayContent('seeDo', subTarget, seeDoContent, 'See & Do');
+                    updateNavLinks(seeDoSubNav, e.target);
+                }
+            });
+            
+            displayContent('stay', 'all', stayContent, 'Stay');
+
+
+            const categoryCounts = recommendations.reduce((acc, item) => {
+                const key = item.subCategory || item.category; // Use subCategory if available, else main category
+                acc[key] = (acc[key] || 0) + 1;
+                return acc;
+            }, {});
+
+            const chartLabels = Object.keys(categoryCounts);
+            const chartData = Object.values(categoryCounts);
+
+            const ctx = document.getElementById('recommendationsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: '# of Recommendations',
+                        data: chartData,
+                        backgroundColor: [
+                            'rgba(13, 148, 136, 0.6)', // teal-600
+                            'rgba(20, 184, 166, 0.6)', // teal-500
+                            'rgba(5, 150, 105, 0.6)',  // emerald-600
+                            'rgba(16, 185, 129, 0.6)', // emerald-500
+                            'rgba(217, 119, 6, 0.6)',  // amber-600
+                            'rgba(245, 158, 11, 0.6)', // amber-500
+                            'rgba(2, 132, 199, 0.6)',  // sky-600
+                            'rgba(14, 165, 233, 0.6)'  // sky-500
+                        ],
+                        borderColor: [
+                            'rgba(13, 148, 136, 1)',
+                            'rgba(20, 184, 166, 1)',
+                            'rgba(5, 150, 105, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(217, 119, 6, 1)',
+                            'rgba(245, 158, 11, 1)',
+                            'rgba(2, 132, 199, 1)',
+                            'rgba(14, 165, 233, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    const label = this.getLabelForValue(value);
+                                    if (label.length > 15) {
+                                        return label.substring(0, 15) + '...';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+             mainNav.querySelector('button[data-target="home"]').click();
+        });
+    </script>
+</body>
+</html>
