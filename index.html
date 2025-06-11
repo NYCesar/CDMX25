@@ -402,8 +402,14 @@
                     e.target.classList.add('nav-link-active');
                     e.target.classList.remove('nav-link-inactive');
 
-                    if (targetId === 'eat') displayContent(targetId, 'all', eatContent, 'Eat');
-                    if (targetId === 'seeDo') displayContent(targetId, 'all', seeDoContent, 'See & Do');
+                    if (targetId === 'eat') {
+                        displayContent(targetId, 'all', eatContent, 'Eat');
+                        updateNavLinks(eatSubNav, eatSubNav.querySelector('button[data-subtarget="all"]'));
+                    }
+                    if (targetId === 'seeDo') {
+                        displayContent(targetId, 'all', seeDoContent, 'See & Do');
+                        updateNavLinks(seeDoSubNav, seeDoSubNav.querySelector('button[data-subtarget="all"]'));
+                    }
                     if (targetId === 'stay') displayContent(targetId, 'all', stayContent, 'Stay');
                 }
             });
