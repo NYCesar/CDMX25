@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mexico City Travel Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .headline { font-family: 'Playfair Display', serif; }
         .tab-active { background-color: #0D9488; color: white; } /* Teal-700 */
         .tab-inactive { background-color: #F3F4F6; color: #374151; } /* Gray-100, Gray-700 */
         .nav-link-active { color: #0D9488; font-weight: 600; border-bottom: 2px solid #0D9488;}
@@ -17,44 +21,91 @@
         .card-link { color: #B45309; } /* Amber-700 for links */
         .card-link:hover { color: #D97706; } /* Amber-600 for hover */
         .section-title { color: #047857; } /* Emerald-700 */
+        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); }
     </style>
 </head>
-<body class="bg-stone-100 text-gray-800">
+<body class="bg-gradient-to-br from-emerald-50 via-stone-100 to-teal-50 text-slate-900">
 
-    <div class="container mx-auto p-4 max-w-6xl">
+    <div class="container mx-auto px-4 pb-12 pt-6 max-w-6xl">
         <header class="text-center py-8">
-            <h1 class="text-4xl font-bold text-teal-700">Mexico City Adventure Guide</h1>
-            <p class="text-lg text-gray-600 mt-2">Your interactive guide to the best of CDMX, curated from travel vlogs.</p>
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-teal-700 via-emerald-600 to-amber-500 px-6 py-10 text-white shadow-xl">
+                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at top left, #fff 0%, transparent 45%), radial-gradient(circle at 80% 20%, #fff 0%, transparent 45%);"></div>
+                <div class="relative space-y-4">
+                    <p class="uppercase tracking-[0.3em] text-xs font-semibold text-emerald-100">Curated CDMX Travel Blueprint</p>
+                    <h1 class="headline text-4xl sm:text-5xl font-bold">Mexico City Adventure Guide</h1>
+                    <p class="text-base sm:text-lg text-emerald-50 max-w-2xl mx-auto">
+                        Your interactive guide to the best of CDMX, curated from travel vlogs and local favorites.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-3 text-sm">
+                        <span class="glass rounded-full px-4 py-2 text-emerald-900 font-medium">⭐ Michelin mentions included</span>
+                        <span class="glass rounded-full px-4 py-2 text-emerald-900 font-medium">📍 Neighborhood by neighborhood</span>
+                        <span class="glass rounded-full px-4 py-2 text-emerald-900 font-medium">🎟️ Quick links to tickets</span>
+                    </div>
+                </div>
+            </div>
         </header>
 
-        <nav id="mainNav" class="bg-white shadow-md rounded-lg p-2 mb-8 flex flex-wrap justify-center space-x-1 sm:space-x-2">
+        <nav id="mainNav" class="sticky top-4 z-10 glass shadow-md rounded-2xl p-2 mb-10 flex flex-wrap justify-center gap-2 border border-white/40">
             <button data-target="home" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-active">🏠 Home</button>
             <button data-target="eat" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">🍽️ Eat</button>
-            <button data-target="seeDo" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">🏞️ See & Do</button>
+            <button data-target="seeDo" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">🏞️ See &amp; Do</button>
             <button data-target="stay" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">🏨 Stay</button>
             <button data-target="tips" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">💡 Travel Tips</button>
         </nav>
 
         <main id="contentArea">
             <section id="home" class="content-section space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h2 class="text-2xl font-semibold section-title mb-4">Welcome to Your Mexico City Guide!</h2>
+                <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60">
+                    <h2 class="text-2xl font-semibold section-title mb-4">Welcome to Your Mexico City Guide</h2>
                     <p class="text-gray-700 leading-relaxed">
                         Mexico City is a vibrant metropolis brimming with history, art, incredible food, and unique cultural experiences. This guide synthesizes recommendations from various travelogues to help you plan an unforgettable trip. Explore different categories using the navigation above to discover top spots for dining, sightseeing, accommodation, and essential travel tips.
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-xl font-semibold section-title mb-4">Recommendations Overview</h3>
-                    <p class="text-gray-700 mb-4">Here's a quick look at the number of curated recommendations available in each main category:</p>
-                    <div class="chart-container">
-                        <canvas id="recommendationsChart"></canvas>
+                <div class="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+                    <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60">
+                        <h3 class="text-xl font-semibold section-title mb-4">Recommendations Overview</h3>
+                        <p class="text-gray-700 mb-4">Here's a quick look at the number of curated recommendations available in each main category:</p>
+                        <div class="chart-container">
+                            <canvas id="recommendationsChart"></canvas>
+                        </div>
+                         <p class="text-sm text-gray-600 mt-4 text-center">This chart provides a visual summary of the diverse experiences awaiting you in Mexico City, based on the curated list in this guide. Use it to get a sense of the variety of options available as you plan your adventure.</p>
                     </div>
-                     <p class="text-sm text-gray-600 mt-4 text-center">This chart provides a visual summary of the diverse experiences awaiting you in Mexico City, based on the curated list in this guide. Use it to get a sense of the variety of options available as you plan your adventure!</p>
+                    <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60 space-y-5">
+                        <h3 class="text-xl font-semibold section-title">Quick Trip Blueprint</h3>
+                        <p class="text-gray-700">Use this short itinerary structure to plan a balanced day that mixes culture, neighborhoods, and food highlights.</p>
+                        <div class="space-y-3 text-sm text-gray-700">
+                            <div class="flex items-start gap-3">
+                                <span class="text-xl">☀️</span>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Morning</p>
+                                    <p>Start with coffee + pastries in Roma or Condesa, then stroll nearby parks.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-xl">🏛️</span>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Midday</p>
+                                    <p>Pick one anchor museum or architecture tour and book ahead.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-xl">🌮</span>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Evening</p>
+                                    <p>Balance street tacos with a reservation-only dinner or cocktail bar.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rounded-xl bg-emerald-50 border border-emerald-100 p-4 text-sm text-emerald-900">
+                            <p class="font-semibold mb-1">Local tip</p>
+                            <p>Build in buffer time between neighborhoods—CDMX traffic is real, but the views are worth it.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <section id="eat" class="content-section hidden space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow">
+                <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60">
                     <h2 class="text-2xl font-semibold section-title mb-4">Culinary Delights</h2>
                     <p class="text-gray-700 leading-relaxed mb-6">
                         Mexico City's food scene is legendary, from world-class bakeries and coffee shops to iconic street tacos and innovative restaurants. This section helps you navigate the diverse culinary landscape. Use the filters below to explore specific categories.
@@ -72,7 +123,7 @@
             </section>
 
             <section id="seeDo" class="content-section hidden space-y-6">
-                 <div class="bg-white p-6 rounded-lg shadow">
+                 <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60">
                     <h2 class="text-2xl font-semibold section-title mb-4">Culture & Experiences</h2>
                     <p class="text-gray-700 leading-relaxed mb-6">
                         Immerse yourself in Mexico City's rich culture, history, and vibrant arts scene. From world-renowned museums and ancient ruins to lively parks and unique local tours, there's an abundance of experiences to discover. Filter by interest below.
@@ -89,7 +140,7 @@
             </section>
 
             <section id="stay" class="content-section hidden space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow">
+                <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60">
                     <h2 class="text-2xl font-semibold section-title mb-4">Accommodation Options</h2>
                      <p class="text-gray-700 leading-relaxed mb-6">
                         Finding the right place to stay is key to a great trip. Mexico City offers a range of accommodations, from unique loft apartments to charming boutique hotels. Here are some highlighted options to consider for your visit.
@@ -100,7 +151,7 @@
             </section>
 
             <section id="tips" class="content-section hidden space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow">
+                <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60">
                     <h2 class="text-2xl font-semibold section-title mb-4">Key Considerations & Travel Tips</h2>
                     <p class="text-gray-700 leading-relaxed mb-4">
                         To make the most of your Mexico City adventure, keep these practical tips in mind. They cover everything from culinary exploration to booking popular attractions, helping you navigate the city smoothly.
@@ -140,7 +191,7 @@
             </section>
         </main>
 
-        <footer class="text-center py-8 mt-12 border-t border-gray-300">
+        <footer class="text-center py-10 mt-12 border-t border-white/60">
             <p class="text-gray-600">&copy; <span id="currentYear"></span> Mexico City Travel Guide. Curated with care.</p>
         </footer>
     </div>
