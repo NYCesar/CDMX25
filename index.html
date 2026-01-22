@@ -14,8 +14,8 @@
         .headline { font-family: 'Playfair Display', serif; }
         .tab-active { background-color: #0D9488; color: white; } /* Teal-700 */
         .tab-inactive { background-color: #F3F4F6; color: #374151; } /* Gray-100, Gray-700 */
-        .nav-link-active { color: #0D9488; font-weight: 600; border-bottom: 2px solid #0D9488;}
-        .nav-link-inactive { color: #4B5563; }
+        .nav-link-active { color: #c7ff4d; font-weight: 600; border: 1px solid rgba(199, 255, 77, 0.5); }
+        .nav-link-inactive { color: #94a3b8; }
         .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
         @media (min-width: 768px) { .chart-container { height: 350px; } }
         .card-link { color: #B45309; } /* Amber-700 for links */
@@ -107,15 +107,15 @@
             <section id="eat" class="content-section hidden space-y-6">
                 <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60">
                     <h2 class="text-2xl font-semibold section-title mb-4">Culinary Delights</h2>
-                    <p class="text-gray-700 leading-relaxed mb-6">
+                    <p class="text-slate-300 leading-relaxed mb-6">
                         Mexico City's food scene is legendary, from world-class bakeries and coffee shops to iconic street tacos and innovative restaurants. This section helps you navigate the diverse culinary landscape. Use the filters below to explore specific categories.
                     </p>
                     <div id="eatSubNav" class="flex flex-wrap justify-center gap-2 mb-6">
-                        <button data-subtarget="all" class="subnav-link bg-teal-600 text-white py-2 px-4 rounded-md text-sm hover:bg-teal-700 transition-colors">All Food</button>
-                        <button data-subtarget="Breakfast & Coffee" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Breakfast & Coffee</button>
-                        <button data-subtarget="Tacos & Street Food" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Tacos & Street Food</button>
-                        <button data-subtarget="Refined Dining" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Refined Dining</button>
-                        <button data-subtarget="Bars & Speakeasies" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Bars & Speakeasies</button>
+                        <button data-subtarget="all" class="subnav-link accent-chip py-2 px-4 rounded-full text-xs font-semibold shadow-lg">All Food</button>
+                        <button data-subtarget="Breakfast & Coffee" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Breakfast & Coffee</button>
+                        <button data-subtarget="Tacos & Street Food" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Tacos & Street Food</button>
+                        <button data-subtarget="Refined Dining" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Refined Dining</button>
+                        <button data-subtarget="Bars & Speakeasies" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Bars & Speakeasies</button>
                     </div>
                     <div id="eatContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         </div>
@@ -125,14 +125,14 @@
             <section id="seeDo" class="content-section hidden space-y-6">
                  <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60">
                     <h2 class="text-2xl font-semibold section-title mb-4">Culture & Experiences</h2>
-                    <p class="text-gray-700 leading-relaxed mb-6">
+                    <p class="text-slate-300 leading-relaxed mb-6">
                         Immerse yourself in Mexico City's rich culture, history, and vibrant arts scene. From world-renowned museums and ancient ruins to lively parks and unique local tours, there's an abundance of experiences to discover. Filter by interest below.
                     </p>
                     <div id="seeDoSubNav" class="flex flex-wrap justify-center gap-2 mb-6">
-                        <button data-subtarget="all" class="subnav-link bg-teal-600 text-white py-2 px-4 rounded-md text-sm hover:bg-teal-700 transition-colors">All Activities</button>
-                        <button data-subtarget="Art, History & Architecture" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Art, History & Architecture</button>
-                        <button data-subtarget="Parks & Urban Escapes" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Parks & Urban Escapes</button>
-                        <button data-subtarget="Unforgettable Adventures" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Unforgettable Adventures</button>
+                        <button data-subtarget="all" class="subnav-link accent-chip py-2 px-4 rounded-full text-xs font-semibold shadow-lg">All Activities</button>
+                        <button data-subtarget="Art, History & Architecture" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Art, History & Architecture</button>
+                        <button data-subtarget="Parks & Urban Escapes" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Parks & Urban Escapes</button>
+                        <button data-subtarget="Unforgettable Adventures" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Unforgettable Adventures</button>
                     </div>
                     <div id="seeDoContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         </div>
@@ -142,7 +142,7 @@
             <section id="stay" class="content-section hidden space-y-6">
                 <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60">
                     <h2 class="text-2xl font-semibold section-title mb-4">Accommodation Options</h2>
-                     <p class="text-gray-700 leading-relaxed mb-6">
+                     <p class="text-slate-300 leading-relaxed mb-6">
                         Finding the right place to stay is key to a great trip. Mexico City offers a range of accommodations, from unique loft apartments to charming boutique hotels. Here are some highlighted options to consider for your visit.
                     </p>
                     <div id="stayContent" class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -153,33 +153,33 @@
             <section id="tips" class="content-section hidden space-y-6">
                 <div class="bg-white/90 p-6 rounded-2xl shadow-lg border border-white/60">
                     <h2 class="text-2xl font-semibold section-title mb-4">Key Considerations & Travel Tips</h2>
-                    <p class="text-gray-700 leading-relaxed mb-4">
+                    <p class="text-slate-300 leading-relaxed mb-4">
                         To make the most of your Mexico City adventure, keep these practical tips in mind. They cover everything from culinary exploration to booking popular attractions, helping you navigate the city smoothly.
                     </p>
-                    <div id="tipsContent" class="space-y-4 text-gray-700">
-                        <div class="p-4 bg-amber-50 rounded-lg border border-amber-200">
-                            <h3 class="font-semibold text-amber-800 mb-1">Embrace Culinary Diversity:</h3>
-                            <p>Explore both renowned fine dining and authentic street food. Keep small denominations of pesos for cash-only street vendors.</p>
+                    <div id="tipsContent" class="space-y-4 text-slate-200">
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-lime-200 mb-1">Embrace Culinary Diversity:</h3>
+                            <p class="text-slate-300">Explore both renowned fine dining and authentic street food. Keep small denominations of pesos for cash-only street vendors.</p>
                         </div>
-                        <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
-                            <h3 class="font-semibold text-sky-800 mb-1">Plan Ahead for Popular Spots:</h3>
-                            <p>For highly acclaimed restaurants, bars (e.g., Handshake Speakeasy), and museums (e.g., Frida Kahlo Museum), secure reservations well in advance, especially during peak seasons.</p>
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-sky-200 mb-1">Plan Ahead for Popular Spots:</h3>
+                            <p class="text-slate-300">For highly acclaimed restaurants, bars (e.g., Handshake Speakeasy), and museums (e.g., Frida Kahlo Museum), secure reservations well in advance, especially during peak seasons.</p>
                         </div>
-                        <div class="p-4 bg-lime-50 rounded-lg border border-lime-200">
-                            <h3 class="font-semibold text-lime-800 mb-1">Be Prepared for Unique Access:</h3>
-                            <p>For exclusive architectural tours (e.g., Luis Barragán homes) or niche local spots, verify booking procedures, payment methods (some are cash-only), and any unique conditions.</p>
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-lime-200 mb-1">Be Prepared for Unique Access:</h3>
+                            <p class="text-slate-300">For exclusive architectural tours (e.g., Luis Barragán homes) or niche local spots, verify booking procedures, payment methods (some are cash-only), and any unique conditions.</p>
                         </div>
-                        <div class="p-4 bg-violet-50 rounded-lg border border-violet-200">
-                            <h3 class="font-semibold text-violet-800 mb-1">Consider Guided Tours:</h3>
-                            <p>For experiences like Lucha Libre, market explorations, or excursions to Teotihuacan and Xochimilco, reputable tour operators can streamline logistics and enhance understanding.</p>
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-purple-200 mb-1">Consider Guided Tours:</h3>
+                            <p class="text-slate-300">For experiences like Lucha Libre, market explorations, or excursions to Teotihuacan and Xochimilco, reputable tour operators can streamline logistics and enhance understanding.</p>
                         </div>
-                         <div class="p-4 bg-rose-50 rounded-lg border border-rose-200">
-                            <h3 class="font-semibold text-rose-800 mb-1">Leverage Online & Local Info:</h3>
-                            <p>While online platforms are useful, some local gems may have limited digital presence. Complement research with local inquiries for authentic discoveries.</p>
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-rose-200 mb-1">Leverage Online & Local Info:</h3>
+                            <p class="text-slate-300">While online platforms are useful, some local gems may have limited digital presence. Complement research with local inquiries for authentic discoveries.</p>
                         </div>
-                        <div class="p-4 bg-gray-100 rounded-lg border border-gray-300">
-                            <h3 class="font-semibold text-gray-800 mb-1">General Advice from Travelers:</h3>
-                            <ul class="list-disc list-inside space-y-1 pl-2">
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-slate-100 mb-2">General Advice from Travelers:</h3>
+                            <ul class="list-disc list-inside space-y-1 pl-2 text-slate-300">
                                 <li>When visiting, remember you're a guest. Try to speak the language, support local businesses, and be respectful.</li>
                                 <li>Mexico City's shopping scene is amazing, with variety from trinkets to high-end items, especially in areas like Roma Norte.</li>
                                 <li>The city is vast; allow time for travel between neighborhoods.</li>
@@ -194,6 +194,10 @@
         <footer class="text-center py-10 mt-12 border-t border-white/60">
             <p class="text-gray-600">&copy; <span id="currentYear"></span> Mexico City Travel Guide. Curated with care.</p>
         </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -408,34 +412,34 @@
                 });
 
                 contentArea.innerHTML = itemsToDisplay.map(item => `
-                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
+                    <div class="panel-soft p-6 rounded-3xl shadow-lg shadow-black/40 hover:shadow-black/60 transition-shadow duration-300 flex flex-col justify-between">
                         <div>
-                            <h3 class="text-xl font-semibold text-teal-700 mb-2">${item.name} ${item.michelin ? '<span title="Michelin Mentioned/Rated">⭐</span>' : ''}</h3>
-                            ${item.subCategory ? `<p class="text-xs text-gray-500 uppercase tracking-wider mb-2">${item.subCategory.replace(/ & /g, ' &amp; ')}</p>` : ''}
-                            <p class="text-gray-700 mb-3 text-sm leading-relaxed">${item.description.replace(/ & /g, ' &amp; ')}</p>
-                            ${item.sourceQuote ? `<p class="text-sm text-amber-700 italic mb-3">"${item.sourceQuote.replace(/ & /g, ' &amp; ')}"</p>` : ''}
-                            ${item.address ? `<p class="text-sm text-gray-600 mb-1">📍 ${item.address.replace(/ & /g, ' &amp; ')}</p>` : ''}
+                            <h3 class="text-lg font-semibold text-white mb-2">${item.name} ${item.michelin ? '<span title="Michelin Mentioned/Rated">⭐</span>' : ''}</h3>
+                            ${item.subCategory ? `<p class="text-[11px] text-slate-400 uppercase tracking-wider mb-2">${item.subCategory.replace(/ & /g, ' &amp; ')}</p>` : ''}
+                            <p class="text-slate-300 mb-3 text-sm leading-relaxed">${item.description.replace(/ & /g, ' &amp; ')}</p>
+                            ${item.sourceQuote ? `<p class="text-sm text-lime-200 italic mb-3">"${item.sourceQuote.replace(/ & /g, ' &amp; ')}"</p>` : ''}
+                            ${item.address ? `<p class="text-sm text-slate-400 mb-1">📍 ${item.address.replace(/ & /g, ' &amp; ')}</p>` : ''}
                         </div>
                         <div class="mt-auto pt-3">
-                            ${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer" class="inline-block bg-amber-600 text-white text-xs py-2 px-3 rounded-md hover:bg-amber-700 transition-colors mr-2">🔗 Visit Website</a>` : ''}
-                            ${item.tickets ? `<a href="${item.tickets}" target="_blank" rel="noopener noreferrer" class="inline-block bg-sky-600 text-white text-xs py-2 px-3 rounded-md hover:bg-sky-700 transition-colors">🎟️ Book Tickets</a>` : ''}
-                            ${item.website2 ? `<a href="${item.website2}" target="_blank" rel="noopener noreferrer" class="inline-block bg-purple-600 text-white text-xs py-2 px-3 rounded-md hover:bg-purple-700 transition-colors">🔗 More Info</a>` : ''}
+                            ${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer" class="inline-block accent-chip text-xs py-2 px-3 rounded-full font-semibold mr-2">🔗 Visit Website</a>` : ''}
+                            ${item.tickets ? `<a href="${item.tickets}" target="_blank" rel="noopener noreferrer" class="inline-block pill text-slate-100 text-xs py-2 px-3 rounded-full hover:text-white transition-colors">🎟️ Book Tickets</a>` : ''}
+                            ${item.website2 ? `<a href="${item.website2}" target="_blank" rel="noopener noreferrer" class="inline-block pill text-slate-100 text-xs py-2 px-3 rounded-full hover:text-white transition-colors mt-2">🔗 More Info</a>` : ''}
                         </div>
                     </div>
                 `).join('');
 
                 if (itemsToDisplay.length === 0) {
-                    contentArea.innerHTML = `<p class="text-gray-600 col-span-full text-center">No recommendations found for this category/filter.</p>`;
+                    contentArea.innerHTML = `<p class="text-slate-400 col-span-full text-center">No recommendations found for this category/filter.</p>`;
                 }
             }
             
             function updateNavLinks(navContainer, clickedButton) {
                 navContainer.querySelectorAll('button').forEach(btn => {
-                    btn.classList.remove('bg-teal-600', 'text-white');
-                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                    btn.classList.remove('accent-chip');
+                    btn.classList.add('pill', 'text-slate-200');
                 });
-                clickedButton.classList.add('bg-teal-600', 'text-white');
-                clickedButton.classList.remove('bg-gray-200', 'text-gray-700');
+                clickedButton.classList.add('accent-chip');
+                clickedButton.classList.remove('pill', 'text-slate-200');
             }
 
             mainNav.addEventListener('click', (e) => {
