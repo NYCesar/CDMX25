@@ -6,252 +6,364 @@
     <title>Mexico City Travel Guide</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lenis for Smooth Scrolling -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    
     <style>
-        html, body { background-color: #0b0b0b; margin: 0; }
-        body { font-family: 'Inter', sans-serif; }
-        .headline { font-family: 'Oswald', sans-serif; letter-spacing: 0.08em; }
+        /* Theme Config - Matching the Dribbble Video Essence */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --surface-color: #ffffff;
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        html, body { background-color: var(--bg-color); margin: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-main); }
+        .headline { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.03em; }
         
         /* Navigation & Tabs */
         .nav-link-active { 
-            color: #c7ff4d; 
+            background: var(--primary-gradient);
+            color: white; 
             font-weight: 600; 
-            border: 1px solid rgba(199, 255, 77, 0.5); 
-            background: rgba(199, 255, 77, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.4);
+            border: none;
         }
-        .nav-link-inactive { color: #94a3b8; border: 1px solid transparent; }
-        .nav-link-inactive:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
+        .nav-link-inactive { 
+            background: white; 
+            color: var(--text-muted); 
+            border: 1px solid #e2e8f0; 
+        }
+        .nav-link-inactive:hover { 
+            color: var(--text-main); 
+            background: #f1f5f9; 
+            transform: translateY(-1px);
+        }
 
         /* Chart */
         .chart-container { position: relative; width: 100%; height: 250px; }
 
         /* Typography */
-        .section-title { color: #c7ff4d; } /* lime */
+        .section-title { 
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
 
         /* Components */
-        .panel { background: #1b1b1b; border: 1px solid rgba(255, 255, 255, 0.06); }
-        .panel-soft { background: #232323; border: 1px solid rgba(255, 255, 255, 0.08); }
-        .pill { background: #2c2c2c; border: 1px solid rgba(255, 255, 255, 0.08); }
-        .accent-chip { background: linear-gradient(135deg, #c7ff4d, #ffa94d); color: #0f0f0f; font-weight: 600; }
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .panel { 
+            background: white; 
+            border: 1px solid #f1f5f9; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        }
         
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0b0b0b; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #444; }
+        .panel-soft { 
+            background: #f8fafc; 
+            border: 1px solid #e2e8f0; 
+        }
+        
+        .panel-soft:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accent-chip { 
+            background: var(--primary-gradient); 
+            color: white; 
+            font-weight: 600; 
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .pill { 
+            background: white; 
+            border: 1px solid #e2e8f0; 
+            color: var(--text-muted);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            transition: all 1.0s cubic-bezier(0.2, 0.8, 0.2, 1);
+            will-change: transform, opacity;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .hover-lift { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .hover-lift:hover { transform: translateY(-4px); }
+
+        /* Stagger Delays */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        
+        /* Gradient Text Helper */
+        .text-gradient {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
-<body class="bg-[#0b0b0b] text-slate-100 min-h-screen">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex items-center justify-center p-4 selection:bg-purple-100 selection:text-purple-900">
 
-    <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 sm:py-6">
-        <!-- Main Dashboard Container -->
-        <div class="rounded-[36px] bg-[#0f0f0f] border border-[#1f1f1f] shadow-2xl shadow-black/50 overflow-hidden flex flex-col lg:flex-row min-h-[calc(100vh-3rem)]">
-            
-            <!-- Sidebar -->
-            <aside class="w-full lg:w-24 bg-[#0a0a0a] border-b lg:border-b-0 lg:border-r border-[#1f1f1f] shrink-0">
-                <div class="flex lg:flex-col items-center justify-between lg:justify-start gap-6 px-4 py-4 lg:py-8 h-full">
-                    <!-- Logo -->
-                    <div class="flex items-center gap-3 lg:flex-col">
-                        <div class="h-10 w-10 lg:h-12 lg:w-12 rounded-full bg-white text-black flex items-center justify-center text-lg lg:text-xl font-bold">CD</div>
-                        <div class="hidden lg:block text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold">CDMX</div>
-                    </div>
-                    
-                    <!-- Icons -->
-                    <div class="flex lg:flex-col items-center gap-4 lg:mt-8">
-                        <button class="h-10 w-10 rounded-full panel-soft flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all">❤️</button>
-                        <button class="h-10 w-10 rounded-full panel-soft flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all">🗺️</button>
-                        <button class="h-10 w-10 rounded-full panel-soft flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all">🎟️</button>
-                    </div>
+    <!-- Main Dashboard Container -->
+    <div class="w-full max-w-7xl rounded-[40px] bg-white border border-slate-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col lg:flex-row h-[92vh] lg:h-[calc(100vh-2rem)] relative">
+        
+        <!-- Decorative Background Blobs inside container -->
+        <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 opacity-60 z-0"></div>
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-purple-200 rounded-full blur-3xl opacity-20 pointer-events-none z-0"></div>
+        <div class="absolute top-48 -left-24 w-72 h-72 bg-blue-200 rounded-full blur-3xl opacity-20 pointer-events-none z-0"></div>
 
-                    <!-- Add Button -->
-                    <div class="lg:mt-auto">
-                        <button class="h-10 w-10 lg:h-12 lg:w-12 rounded-full accent-chip text-xl shadow-lg hover:opacity-90 transition-opacity flex items-center justify-center">+</button>
-                    </div>
+        <!-- Sidebar -->
+        <aside class="w-full lg:w-24 bg-white/80 backdrop-blur-md border-b lg:border-b-0 lg:border-r border-slate-100 shrink-0 z-20 flex flex-col items-center py-6 shadow-sm">
+            <div class="flex lg:flex-col items-center justify-between lg:justify-start gap-8 w-full px-6 lg:px-0 h-full">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 lg:flex-col">
+                    <div class="h-12 w-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-xl font-bold shadow-xl shadow-slate-200">CD</div>
                 </div>
-            </aside>
+                
+                <!-- Icons -->
+                <div class="flex lg:flex-col items-center gap-6 lg:mt-8">
+                    <button class="group relative h-12 w-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-slate-400 hover:text-purple-600 hover:shadow-lg hover:shadow-purple-100 hover:border-purple-100 transition-all duration-300">
+                        <span class="transform group-hover:scale-110 transition-transform">❤️</span>
+                    </button>
+                    <button class="group relative h-12 w-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:shadow-lg hover:shadow-blue-100 hover:border-blue-100 transition-all duration-300">
+                        <span class="transform group-hover:scale-110 transition-transform">🗺️</span>
+                    </button>
+                    <button class="group relative h-12 w-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-slate-400 hover:text-pink-600 hover:shadow-lg hover:shadow-pink-100 hover:border-pink-100 transition-all duration-300">
+                        <span class="transform group-hover:scale-110 transition-transform">🎟️</span>
+                    </button>
+                </div>
 
-            <!-- Main Content -->
-            <div class="flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-8 overflow-y-auto">
+                <!-- Add Button -->
+                <div class="lg:mt-auto">
+                    <button class="h-14 w-14 rounded-full accent-chip text-2xl shadow-lg hover:shadow-purple-400/50 hover:scale-105 active:scale-95 flex items-center justify-center transition-all duration-300">+</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Wrapper for Lenis -->
+        <!-- Fixed: Removed 'scroll-smooth' class to prevent conflict with Lenis JS -->
+        <div id="scrollWrapper" class="flex-1 overflow-y-auto relative z-10">
+            <!-- Content Inner for Lenis Target -->
+            <div id="scrollContent" class="px-6 py-8 sm:px-10 lg:px-12 lg:py-10">
                 
                 <!-- Header Area -->
-                <header class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between mb-8">
-                    <div>
-                        <p class="text-xs uppercase tracking-[0.3em] text-lime-300/70 font-semibold">Mexico City Guide</p>
-                        <h1 class="headline text-3xl sm:text-5xl text-white mt-2">CHECK POINTS</h1>
-                        <p class="text-slate-400 mt-2 text-sm sm:text-base max-w-xl">A curated guide to CDMX dining, culture, and stays—organized for quick exploration.</p>
+                <header class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between mb-12 reveal delay-100 relative">
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-purple-100 shadow-sm mb-4">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-xs font-semibold text-slate-600 tracking-wide uppercase">Live Guide • 2026</span>
+                        </div>
+                        <h1 class="headline text-5xl sm:text-6xl font-extrabold text-slate-900 leading-tight">
+                            Explore <br>
+                            <span class="text-gradient">Mexico City.</span>
+                        </h1>
+                        <p class="text-slate-500 mt-4 text-lg max-w-xl font-medium">Your curated dashboard for dining, culture, and hidden gems in CDMX.</p>
                     </div>
                     
-                    <!-- Status Chips -->
-                    <div class="flex flex-wrap items-center gap-3">
-                        <div class="panel rounded-full px-4 py-2 text-xs sm:text-sm text-slate-400 border border-white/5">Season: <span class="text-white font-semibold">Spring</span></div>
-                        <div class="panel rounded-full px-4 py-2 text-xs sm:text-sm text-slate-400 border border-white/5">Mood: <span class="text-white font-semibold">Adventure</span></div>
-                        <div class="hidden sm:flex items-center gap-3 panel rounded-full pl-2 pr-4 py-1.5 border border-white/5">
-                            <div class="h-7 w-7 rounded-full bg-gradient-to-tr from-lime-400 to-emerald-500"></div>
-                            <div class="text-xs">
-                                <p class="text-white font-semibold leading-none">Explorer</p>
-                                <p class="text-[10px] text-slate-400">@traveler</p>
+                    <!-- Status Cards -->
+                    <div class="flex gap-4">
+                        <div class="panel p-4 rounded-2xl flex items-center gap-3 w-40 hover-lift cursor-pointer">
+                            <div class="h-10 w-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-xl">☀️</div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-semibold uppercase">Weather</p>
+                                <p class="text-slate-800 font-bold">24° Sunny</p>
+                            </div>
+                        </div>
+                        <div class="panel p-4 rounded-2xl flex items-center gap-3 w-40 hover-lift cursor-pointer">
+                            <div class="h-10 w-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xl">🚀</div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-semibold uppercase">Mood</p>
+                                <p class="text-slate-800 font-bold">Electric</p>
                             </div>
                         </div>
                     </div>
                 </header>
 
                 <!-- Navigation Tabs -->
-                <nav id="mainNav" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-8">
-                    <button data-target="home" class="nav-link panel rounded-2xl px-4 py-3 text-left text-sm transition-all nav-link-active">🏠 Home</button>
-                    <button data-target="eat" class="nav-link panel rounded-2xl px-4 py-3 text-left text-sm transition-all nav-link-inactive">🍽️ Eat</button>
-                    <button data-target="seeDo" class="nav-link panel rounded-2xl px-4 py-3 text-left text-sm transition-all nav-link-inactive">🏞️ See &amp; Do</button>
-                    <button data-target="stay" class="nav-link panel rounded-2xl px-4 py-3 text-left text-sm transition-all nav-link-inactive">🏨 Stay</button>
-                    <button data-target="tips" class="nav-link panel rounded-2xl px-4 py-3 text-left text-sm transition-all nav-link-inactive sm:col-span-3 md:col-span-1">💡 Tips</button>
+                <nav id="mainNav" class="flex flex-wrap gap-4 mb-10 reveal delay-200 pb-2">
+                    <button data-target="home" class="nav-link px-6 py-3 rounded-full text-sm transition-all nav-link-active hover-lift">Dashboard</button>
+                    <button data-target="eat" class="nav-link px-6 py-3 rounded-full text-sm transition-all nav-link-inactive">Dining</button>
+                    <button data-target="seeDo" class="nav-link px-6 py-3 rounded-full text-sm transition-all nav-link-inactive">Culture</button>
+                    <button data-target="stay" class="nav-link px-6 py-3 rounded-full text-sm transition-all nav-link-inactive">Stays</button>
+                    <button data-target="tips" class="nav-link px-6 py-3 rounded-full text-sm transition-all nav-link-inactive">Tips</button>
                 </nav>
 
                 <!-- Dynamic Content Area -->
-                <main id="contentArea" class="pb-10">
+                <main id="contentArea" class="pb-16 min-h-[500px]">
                     
                     <!-- HOME SECTION -->
-                    <section id="home" class="content-section space-y-6 animate-fade-in">
-                        <div class="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+                    <section id="home" class="content-section space-y-8">
+                        <div class="grid gap-8 lg:grid-cols-[1.5fr_1fr]">
                             <!-- Stats & Intro -->
-                            <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40 border border-white/5">
-                                <h2 class="text-xl font-semibold section-title mb-3">Your CDMX Dashboard</h2>
-                                <p class="text-slate-300 text-sm leading-relaxed mb-6">
-                                    Welcome. This interactive guide synthesizes top recommendations for Mexico City. 
-                                    Use the tabs above to filter by category, or check the blueprint below for a quick start.
+                            <div class="panel rounded-[32px] p-8 reveal delay-200 relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-purple-100 to-transparent rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
+                                
+                                <h2 class="text-2xl font-bold text-slate-900 mb-4 relative z-10">Your Trip Overview</h2>
+                                <p class="text-slate-500 text-base leading-relaxed mb-8 max-w-md relative z-10">
+                                    We've curated the absolute best spots based on your preferences. Start exploring the categories to build your itinerary.
                                 </p>
                                 
-                                <div class="grid grid-cols-3 gap-3">
-                                    <div class="panel-soft rounded-2xl p-4 text-center sm:text-left">
-                                        <p class="text-[10px] uppercase text-slate-500 font-bold tracking-wider">Spots</p>
-                                        <p class="text-2xl font-bold text-white mt-1" id="totalCount">0</p>
+                                <div class="grid grid-cols-3 gap-4 relative z-10">
+                                    <div class="panel-soft rounded-2xl p-5 text-center transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-1">
+                                        <p class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 mb-1" id="totalCount">0</p>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Spots</p>
                                     </div>
-                                    <div class="panel-soft rounded-2xl p-4 text-center sm:text-left">
-                                        <p class="text-[10px] uppercase text-slate-500 font-bold tracking-wider">Food</p>
-                                        <p class="text-2xl font-bold text-white mt-1" id="foodCount">0</p>
+                                    <div class="panel-soft rounded-2xl p-5 text-center transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-1">
+                                        <p class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500 mb-1" id="foodCount">0</p>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Eateries</p>
                                     </div>
-                                    <div class="panel-soft rounded-2xl p-4 text-center sm:text-left">
-                                        <p class="text-[10px] uppercase text-slate-500 font-bold tracking-wider">Culture</p>
-                                        <p class="text-2xl font-bold text-white mt-1" id="cultureCount">0</p>
+                                    <div class="panel-soft rounded-2xl p-5 text-center transition-all duration-300 hover:bg-white hover:shadow-lg hover:-translate-y-1">
+                                        <p class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 mb-1" id="cultureCount">0</p>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Sights</p>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Quick Chart -->
-                            <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40 border border-white/5 flex flex-col justify-center">
-                                <div class="flex items-center justify-between mb-2">
-                                    <h3 class="text-sm font-semibold text-slate-200">Category Breakdown</h3>
-                                    <span class="text-[10px] text-lime-400 bg-lime-400/10 px-2 py-1 rounded-full">Live Data</span>
+                            <div class="panel rounded-[32px] p-8 flex flex-col justify-center reveal delay-300 bg-slate-900 text-white relative overflow-hidden">
+                                <!-- Dark card for contrast like in video -->
+                                <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                                <div class="absolute bottom-0 right-0 w-48 h-48 bg-purple-600 rounded-full blur-[80px] opacity-40"></div>
+                                
+                                <div class="flex items-center justify-between mb-4 relative z-10">
+                                    <h3 class="text-lg font-semibold">Mix & Match</h3>
+                                    <span class="text-[10px] text-white bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">Real-time</span>
                                 </div>
-                                <div class="chart-container flex items-center justify-center">
+                                <div class="chart-container flex items-center justify-center relative z-10">
                                     <canvas id="recommendationsChart"></canvas>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Quick Trip Blueprint -->
-                        <div class="panel rounded-3xl p-6 sm:p-8 shadow-lg shadow-black/40 border border-white/5">
-                            <h3 class="text-lg font-semibold text-white mb-6">Daily Blueprint</h3>
-                            <div class="grid sm:grid-cols-3 gap-6 relative">
-                                <!-- Connecting Line (Desktop) -->
-                                <div class="hidden sm:block absolute top-4 left-0 w-full h-0.5 bg-gradient-to-r from-lime-500/20 via-lime-500/50 to-lime-500/20 z-0"></div>
+                        <div class="panel rounded-[32px] p-8 sm:p-10 reveal border-t-4 border-t-purple-500">
+                            <h3 class="text-xl font-bold text-slate-900 mb-8">Perfect Day Blueprint</h3>
+                            <div class="grid sm:grid-cols-3 gap-8 relative">
+                                <!-- Connecting Line -->
+                                <div class="hidden sm:block absolute top-6 left-0 w-full h-1 bg-gradient-to-r from-purple-100 via-pink-100 to-purple-100 rounded-full z-0"></div>
 
                                 <!-- Step 1 -->
-                                <div class="relative z-10">
-                                    <div class="w-8 h-8 rounded-full accent-chip flex items-center justify-center text-sm font-bold mb-4 shadow-[0_0_15px_rgba(199,255,77,0.3)]">1</div>
-                                    <h4 class="text-white font-medium mb-1">Morning: Roma Norte</h4>
-                                    <p class="text-xs text-slate-400 leading-relaxed">Coffee at Panadería Rosetta followed by a walk through Plaza Rio de Janeiro.</p>
+                                <div class="relative z-10 group hover-lift">
+                                    <div class="w-12 h-12 rounded-2xl bg-white border-2 border-purple-100 shadow-lg flex items-center justify-center text-lg font-bold mb-5 group-hover:border-purple-500 transition-colors">☕️</div>
+                                    <h4 class="text-slate-900 font-bold text-lg mb-2">Morning</h4>
+                                    <p class="text-sm text-slate-500 leading-relaxed font-medium">Coffee at <span class="text-purple-600">Panadería Rosetta</span> followed by a walk through Plaza Rio de Janeiro.</p>
                                 </div>
                                 
                                 <!-- Step 2 -->
-                                <div class="relative z-10">
-                                    <div class="w-8 h-8 rounded-full bg-[#333] border border-white/10 text-slate-200 flex items-center justify-center text-sm font-bold mb-4">2</div>
-                                    <h4 class="text-white font-medium mb-1">Afternoon: Coyoacán</h4>
-                                    <p class="text-xs text-slate-400 leading-relaxed">Visit the Frida Kahlo Museum (book weeks ahead!) and explore the local market.</p>
+                                <div class="relative z-10 group hover-lift">
+                                    <div class="w-12 h-12 rounded-2xl bg-white border-2 border-pink-100 shadow-lg flex items-center justify-center text-lg font-bold mb-5 group-hover:border-pink-500 transition-colors">🎨</div>
+                                    <h4 class="text-slate-900 font-bold text-lg mb-2">Afternoon</h4>
+                                    <p class="text-sm text-slate-500 leading-relaxed font-medium">Visit <span class="text-pink-600">Frida Kahlo Museum</span> (book weeks ahead!) and explore the vibrant market.</p>
                                 </div>
 
                                 <!-- Step 3 -->
-                                <div class="relative z-10">
-                                    <div class="w-8 h-8 rounded-full bg-[#333] border border-white/10 text-slate-200 flex items-center justify-center text-sm font-bold mb-4">3</div>
-                                    <h4 class="text-white font-medium mb-1">Evening: Polanco</h4>
-                                    <p class="text-xs text-slate-400 leading-relaxed">Dinner at Pujol or Quintonil, followed by cocktails at a speakeasy.</p>
+                                <div class="relative z-10 group hover-lift">
+                                    <div class="w-12 h-12 rounded-2xl bg-white border-2 border-blue-100 shadow-lg flex items-center justify-center text-lg font-bold mb-5 group-hover:border-blue-500 transition-colors">🌮</div>
+                                    <h4 class="text-slate-900 font-bold text-lg mb-2">Evening</h4>
+                                    <p class="text-sm text-slate-500 leading-relaxed font-medium">Dinner at <span class="text-blue-600">Pujol</span> or Quintonil, followed by cocktails at a hidden speakeasy.</p>
                                 </div>
                             </div>
                         </div>
                     </section>
 
                     <!-- EAT SECTION -->
-                    <section id="eat" class="content-section hidden space-y-6">
-                        <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40 border border-white/5">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <section id="eat" class="content-section hidden space-y-8">
+                        <div class="panel rounded-[32px] p-8 reveal min-h-[60vh]">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
                                 <div>
-                                    <h2 class="text-2xl font-semibold section-title">Culinary Delights</h2>
-                                    <p class="text-slate-400 text-sm mt-1">From street tacos to Michelin stars.</p>
+                                    <h2 class="text-3xl font-bold text-slate-900">Culinary Delights</h2>
+                                    <p class="text-slate-500 font-medium mt-2">From street tacos to Michelin stars.</p>
                                 </div>
                                 <div id="eatSubNav" class="flex flex-wrap gap-2">
-                                    <button data-subtarget="all" class="subnav-link accent-chip px-4 py-1.5 rounded-full text-xs hover:opacity-90 transition-all">All</button>
-                                    <button data-subtarget="Breakfast & Coffee" class="subnav-link pill text-slate-300 px-4 py-1.5 rounded-full text-xs hover:bg-white/10 transition-all">Coffee & Brunch</button>
-                                    <button data-subtarget="Tacos & Street Food" class="subnav-link pill text-slate-300 px-4 py-1.5 rounded-full text-xs hover:bg-white/10 transition-all">Tacos</button>
-                                    <button data-subtarget="Refined Dining" class="subnav-link pill text-slate-300 px-4 py-1.5 rounded-full text-xs hover:bg-white/10 transition-all">Fine Dining</button>
+                                    <button data-subtarget="all" class="subnav-link accent-chip px-5 py-2 rounded-full text-sm hover:shadow-lg transition-all transform hover:-translate-y-0.5">All</button>
+                                    <button data-subtarget="Breakfast & Coffee" class="subnav-link pill px-5 py-2 rounded-full text-sm hover:bg-slate-50 hover:text-slate-900 transition-all">Coffee & Brunch</button>
+                                    <button data-subtarget="Tacos & Street Food" class="subnav-link pill px-5 py-2 rounded-full text-sm hover:bg-slate-50 hover:text-slate-900 transition-all">Tacos</button>
+                                    <button data-subtarget="Refined Dining" class="subnav-link pill px-5 py-2 rounded-full text-sm hover:bg-slate-50 hover:text-slate-900 transition-all">Fine Dining</button>
                                 </div>
                             </div>
-                            <div id="eatContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div id="eatContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <!-- JS Injected Content -->
                             </div>
                         </div>
                     </section>
 
                     <!-- SEE & DO SECTION -->
-                    <section id="seeDo" class="content-section hidden space-y-6">
-                        <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40 border border-white/5">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <section id="seeDo" class="content-section hidden space-y-8">
+                        <div class="panel rounded-[32px] p-8 reveal min-h-[60vh]">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
                                 <div>
-                                    <h2 class="text-2xl font-semibold section-title">Culture & Sights</h2>
-                                    <p class="text-slate-400 text-sm mt-1">Museums, parks, and ancient history.</p>
+                                    <h2 class="text-3xl font-bold text-slate-900">Culture & Sights</h2>
+                                    <p class="text-slate-500 font-medium mt-2">Museums, parks, and ancient history.</p>
                                 </div>
                                 <div id="seeDoSubNav" class="flex flex-wrap gap-2">
-                                    <button data-subtarget="all" class="subnav-link accent-chip px-4 py-1.5 rounded-full text-xs hover:opacity-90 transition-all">All</button>
-                                    <button data-subtarget="Art, History & Architecture" class="subnav-link pill text-slate-300 px-4 py-1.5 rounded-full text-xs hover:bg-white/10 transition-all">History</button>
-                                    <button data-subtarget="Parks & Urban Escapes" class="subnav-link pill text-slate-300 px-4 py-1.5 rounded-full text-xs hover:bg-white/10 transition-all">Parks</button>
-                                    <button data-subtarget="Unforgettable Adventures" class="subnav-link pill text-slate-300 px-4 py-1.5 rounded-full text-xs hover:bg-white/10 transition-all">Adventure</button>
+                                    <button data-subtarget="all" class="subnav-link accent-chip px-5 py-2 rounded-full text-sm hover:shadow-lg transition-all transform hover:-translate-y-0.5">All</button>
+                                    <button data-subtarget="Art, History & Architecture" class="subnav-link pill px-5 py-2 rounded-full text-sm hover:bg-slate-50 hover:text-slate-900 transition-all">History</button>
+                                    <button data-subtarget="Parks & Urban Escapes" class="subnav-link pill px-5 py-2 rounded-full text-sm hover:bg-slate-50 hover:text-slate-900 transition-all">Parks</button>
+                                    <button data-subtarget="Unforgettable Adventures" class="subnav-link pill px-5 py-2 rounded-full text-sm hover:bg-slate-50 hover:text-slate-900 transition-all">Adventure</button>
                                 </div>
                             </div>
-                            <div id="seeDoContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div id="seeDoContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <!-- JS Injected Content -->
                             </div>
                         </div>
                     </section>
 
                     <!-- STAY SECTION -->
-                    <section id="stay" class="content-section hidden space-y-6">
-                        <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40 border border-white/5">
-                            <h2 class="text-2xl font-semibold section-title mb-2">Accommodation</h2>
-                            <p class="text-slate-400 text-sm mb-6">Curated stays in the best neighborhoods.</p>
-                            <div id="stayContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                    <section id="stay" class="content-section hidden space-y-8">
+                        <div class="panel rounded-[32px] p-8 reveal min-h-[60vh]">
+                            <h2 class="text-3xl font-bold text-slate-900 mb-2">Accommodation</h2>
+                            <p class="text-slate-500 font-medium mb-8">Curated stays in the best neighborhoods.</p>
+                            <div id="stayContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                                 <!-- JS Injected Content -->
                             </div>
                         </div>
                     </section>
 
                     <!-- TIPS SECTION -->
-                    <section id="tips" class="content-section hidden space-y-6">
-                        <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40 border border-white/5">
-                            <h2 class="text-2xl font-semibold section-title mb-6">Travel Tips</h2>
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <div class="panel-soft p-5 rounded-2xl border-l-2 border-lime-400">
-                                    <h3 class="font-semibold text-lime-100 mb-2">💰 Cash & Currency</h3>
-                                    <p class="text-sm text-slate-400 leading-relaxed">Keep small denominations of pesos (20s, 50s) for street food vendors and tipping. Not everyone accepts cards.</p>
+                    <section id="tips" class="content-section hidden space-y-8">
+                        <div class="panel rounded-[32px] p-8 reveal min-h-[60vh]">
+                            <h2 class="text-3xl font-bold text-slate-900 mb-8">Travel Tips</h2>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="panel-soft p-6 rounded-2xl border-l-4 border-green-500 bg-green-50/50 reveal delay-100 hover-lift">
+                                    <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">💰 Cash & Currency</h3>
+                                    <p class="text-sm text-slate-600 leading-relaxed font-medium">Keep small denominations of pesos (20s, 50s) for street food vendors and tipping. Not everyone accepts cards.</p>
                                 </div>
-                                <div class="panel-soft p-5 rounded-2xl border-l-2 border-sky-400">
-                                    <h3 class="font-semibold text-sky-100 mb-2">📅 Reservations</h3>
-                                    <p class="text-sm text-slate-400 leading-relaxed">For top spots like Pujol or Casa Azul, book 1-2 months in advance. They sell out incredibly fast.</p>
+                                <div class="panel-soft p-6 rounded-2xl border-l-4 border-blue-500 bg-blue-50/50 reveal delay-200 hover-lift">
+                                    <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">📅 Reservations</h3>
+                                    <p class="text-sm text-slate-600 leading-relaxed font-medium">For top spots like Pujol or Casa Azul, book 1-2 months in advance. They sell out incredibly fast.</p>
                                 </div>
-                                <div class="panel-soft p-5 rounded-2xl border-l-2 border-amber-400">
-                                    <h3 class="font-semibold text-amber-100 mb-2">🚗 Getting Around</h3>
-                                    <p class="text-sm text-slate-400 leading-relaxed">Uber is safe and affordable. Avoid hailing street taxis. The Metro is efficient but very crowded during rush hour.</p>
+                                <div class="panel-soft p-6 rounded-2xl border-l-4 border-orange-500 bg-orange-50/50 reveal delay-300 hover-lift">
+                                    <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">🚗 Getting Around</h3>
+                                    <p class="text-sm text-slate-600 leading-relaxed font-medium">Uber is safe and affordable. Avoid hailing street taxis. The Metro is efficient but very crowded during rush hour.</p>
                                 </div>
-                                <div class="panel-soft p-5 rounded-2xl border-l-2 border-purple-400">
-                                    <h3 class="font-semibold text-purple-100 mb-2">💧 Water Safety</h3>
-                                    <p class="text-sm text-slate-400 leading-relaxed">Do not drink tap water. Use bottled or filtered water for drinking and brushing your teeth to avoid illness.</p>
+                                <div class="panel-soft p-6 rounded-2xl border-l-4 border-purple-500 bg-purple-50/50 reveal delay-300 hover-lift">
+                                    <h3 class="font-bold text-slate-800 mb-2 flex items-center gap-2">💧 Water Safety</h3>
+                                    <p class="text-sm text-slate-600 leading-relaxed font-medium">Do not drink tap water. Use bottled or filtered water for drinking and brushing your teeth to avoid illness.</p>
                                 </div>
                             </div>
                         </div>
@@ -260,8 +372,8 @@
                 </main>
 
                 <!-- Footer -->
-                <footer class="text-center pt-8 border-t border-[#1f1f1f] text-slate-500 text-xs">
-                    <p>&copy; <span id="currentYear"></span> Mexico City Travel Guide. Curated with ❤️ and JS.</p>
+                <footer class="text-center pt-8 border-t border-slate-100 text-slate-400 text-sm font-medium">
+                    <p>&copy; <span id="currentYear"></span> Mexico City Travel Guide. Designed with ❤️.</p>
                 </footer>
             </div>
         </div>
@@ -347,42 +459,94 @@
             const seeDoContent = document.getElementById('seeDoContent');
             const stayContent = document.getElementById('stayContent');
 
-            // Render Function
+            // --- ANIMATION & SCROLL LOGIC ---
+
+            // 1. Initialize Lenis
+            const scrollWrapper = document.getElementById('scrollWrapper');
+            const scrollContent = document.getElementById('scrollContent');
+
+            const lenis = new Lenis({
+                wrapper: scrollWrapper,
+                content: scrollContent,
+                duration: 0.8, // Reduced for snappier feel
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1.5, // Increased for easier nav
+                smoothTouch: false,
+                touchMultiplier: 2,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            // 2. Reveal Animation Observer
+            const observerOptions = {
+                root: scrollWrapper,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            function observeElements() {
+                const elements = document.querySelectorAll('.reveal:not(.active)');
+                elements.forEach(el => observer.observe(el));
+            }
+            
+            observeElements();
+
+            // Render Function with Staggered Delays and New Aesthetics
             function displayContent(targetId, subTarget = 'all', contentArea, dataCategory) {
                 const itemsToDisplay = recommendations.filter(item => {
                     if (item.category !== dataCategory) return false;
                     return subTarget === 'all' || item.subCategory === subTarget;
                 });
 
-                contentArea.innerHTML = itemsToDisplay.map(item => `
-                    <div class="panel-soft p-5 rounded-2xl flex flex-col justify-between hover:bg-[#2a2a2a] transition-colors group border border-transparent hover:border-lime-500/20">
+                contentArea.innerHTML = itemsToDisplay.map((item, index) => {
+                    const delayClass = `delay-${Math.min((index + 1) * 100, 500)}`;
+                    
+                    return `
+                    <div class="reveal ${delayClass} panel-soft p-6 rounded-2xl flex flex-col justify-between hover:bg-white hover:shadow-xl hover:shadow-purple-500/5 transition-all duration-300 group border border-slate-100">
                         <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-base font-semibold text-white group-hover:text-lime-300 transition-colors">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-lg font-bold text-slate-800 group-hover:text-purple-600 transition-colors">
                                     ${item.name}
                                 </h3>
-                                ${item.michelin ? '<span class="text-xs ml-2 cursor-help" title="Michelin Recognized">⭐</span>' : ''}
+                                ${item.michelin ? '<span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-md text-[10px] font-bold uppercase tracking-wide">Michelin</span>' : ''}
                             </div>
                             
-                            ${item.subCategory ? `<p class="text-[10px] text-slate-500 uppercase tracking-wider mb-2 font-bold">${item.subCategory}</p>` : ''}
+                            ${item.subCategory ? `<p class="text-xs font-bold text-purple-500 uppercase tracking-widest mb-3">${item.subCategory}</p>` : ''}
                             
-                            <p class="text-slate-300 mb-4 text-xs leading-relaxed line-clamp-3">${item.description}</p>
+                            <p class="text-slate-600 mb-5 text-sm leading-relaxed font-medium line-clamp-3">${item.description}</p>
                             
-                            ${item.address ? `<p class="text-xs text-slate-500 mb-3 flex items-center gap-1">📍 ${item.address}</p>` : ''}
+                            ${item.address ? `<p class="text-xs text-slate-400 mb-4 flex items-center gap-1 font-semibold">📍 ${item.address}</p>` : ''}
                             
-                            ${item.sourceQuote ? `<div class="bg-black/20 p-2 rounded-lg mb-3 border-l-2 border-amber-500"><p class="text-[11px] text-slate-400 italic">"${item.sourceQuote}"</p></div>` : ''}
+                            ${item.sourceQuote ? `<div class="bg-slate-50 p-3 rounded-xl mb-4 border border-slate-100"><p class="text-xs text-slate-500 italic">"${item.sourceQuote}"</p></div>` : ''}
                         </div>
                         
-                        <div class="mt-2 flex gap-2">
-                            ${item.website ? `<a href="${item.website}" target="_blank" class="text-[10px] bg-[#333] hover:bg-lime-900 hover:text-lime-200 text-white px-3 py-1.5 rounded-full transition-colors">Website ↗</a>` : ''}
-                            ${item.tickets ? `<a href="${item.tickets}" target="_blank" class="text-[10px] bg-lime-600 hover:bg-lime-500 text-black font-semibold px-3 py-1.5 rounded-full transition-colors">Tickets 🎟️</a>` : ''}
+                        <div class="mt-2 flex gap-3">
+                            ${item.website ? `<a href="${item.website}" target="_blank" class="text-xs bg-slate-100 hover:bg-purple-600 hover:text-white text-slate-700 font-bold px-4 py-2 rounded-full transition-all">Visit Website ↗</a>` : ''}
+                            ${item.tickets ? `<a href="${item.tickets}" target="_blank" class="text-xs bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold px-4 py-2 rounded-full transition-all shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40">Get Tickets</a>` : ''}
                         </div>
                     </div>
-                `).join('');
+                `}).join('');
 
                 if (itemsToDisplay.length === 0) {
-                    contentArea.innerHTML = `<p class="text-slate-500 col-span-full text-center py-10 italic">No spots found in this category yet.</p>`;
+                    contentArea.innerHTML = `<p class="text-slate-400 col-span-full text-center py-10 italic font-medium">No spots found in this category yet.</p>`;
                 }
+
+                setTimeout(observeElements, 50);
             }
 
             // Tab Switching Logic
@@ -390,12 +554,12 @@
                 if (e.target.tagName === 'BUTTON') {
                     const targetId = e.target.dataset.target;
                     
-                    // Hide all sections
                     contentSections.forEach(section => section.classList.add('hidden'));
-                    // Show target
-                    document.getElementById(targetId).classList.remove('hidden');
+                    const targetSection = document.getElementById(targetId);
+                    targetSection.classList.remove('hidden');
 
-                    // Update Main Nav Styles
+                    lenis.scrollTo(0, { immediate: true });
+
                     mainNav.querySelectorAll('button').forEach(btn => {
                         btn.classList.remove('nav-link-active');
                         btn.classList.add('nav-link-inactive');
@@ -403,27 +567,30 @@
                     e.target.classList.add('nav-link-active');
                     e.target.classList.remove('nav-link-inactive');
 
-                    // Trigger render for specific tabs
                     if (targetId === 'eat') displayContent('eat', 'all', eatContent, 'Eat');
                     if (targetId === 'seeDo') displayContent('seeDo', 'all', seeDoContent, 'See & Do');
                     if (targetId === 'stay') displayContent('stay', 'all', stayContent, 'Stay');
+                    
+                    if (targetId === 'home' || targetId === 'tips') {
+                         targetSection.querySelectorAll('.reveal').forEach(el => {
+                             el.classList.remove('active');
+                         });
+                         setTimeout(observeElements, 50);
+                    }
                 }
             });
 
-            // Sub-Nav Logic (Generic)
+            // Sub-Nav Logic
             function setupSubNav(navElement, contentElement, categoryName) {
                 if(!navElement) return;
                 navElement.addEventListener('click', (e) => {
                     if (e.target.tagName === 'BUTTON') {
-                        // Update Styles
                         navElement.querySelectorAll('button').forEach(btn => {
                             btn.classList.remove('accent-chip');
-                            btn.classList.add('pill', 'text-slate-300');
+                            btn.classList.add('pill');
                         });
-                        e.target.classList.remove('pill', 'text-slate-300');
+                        e.target.classList.remove('pill');
                         e.target.classList.add('accent-chip');
-
-                        // Render
                         displayContent(null, e.target.dataset.subtarget, contentElement, categoryName);
                     }
                 });
@@ -432,10 +599,8 @@
             setupSubNav(eatSubNav, eatContent, 'Eat');
             setupSubNav(seeDoSubNav, seeDoContent, 'See & Do');
 
-            // Initialize Charts
+            // Initialize Charts with Video Colors
             const ctx = document.getElementById('recommendationsChart').getContext('2d');
-            
-            // Prepare Data
             const categories = ['Eat', 'See & Do', 'Stay'];
             const counts = categories.map(cat => recommendations.filter(r => r.category === cat).length);
 
@@ -446,12 +611,12 @@
                     datasets: [{
                         data: counts,
                         backgroundColor: [
-                            '#fbbf24', // Amber (Eat)
-                            '#22d3ee', // Cyan (See Do)
-                            '#a3e635'  // Lime (Stay)
+                            '#f97316', // Orange
+                            '#8b5cf6', // Purple
+                            '#3b82f6'  // Blue
                         ],
                         borderWidth: 0,
-                        hoverOffset: 4
+                        hoverOffset: 10
                     }]
                 },
                 options: {
@@ -459,16 +624,10 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            position: 'right',
-                            labels: {
-                                color: '#94a3b8',
-                                font: { family: 'Inter', size: 10 },
-                                boxWidth: 10,
-                                usePointStyle: true
-                            }
+                            display: false // Cleaner look like video
                         }
                     },
-                    cutout: '75%'
+                    cutout: '85%'
                 }
             });
         });
