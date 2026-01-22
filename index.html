@@ -4,67 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mexico City Travel Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .headline { font-family: 'Oswald', sans-serif; letter-spacing: 0.08em; }
         .tab-active { background-color: #0D9488; color: white; } /* Teal-700 */
         .tab-inactive { background-color: #F3F4F6; color: #374151; } /* Gray-100, Gray-700 */
-        .nav-link-active { color: #0D9488; font-weight: 600; border-bottom: 2px solid #0D9488;}
-        .nav-link-inactive { color: #4B5563; }
+        .nav-link-active { color: #c7ff4d; font-weight: 600; border: 1px solid rgba(199, 255, 77, 0.5); }
+        .nav-link-inactive { color: #94a3b8; }
         .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
         @media (min-width: 768px) { .chart-container { height: 350px; } }
         .card-link { color: #B45309; } /* Amber-700 for links */
         .card-link:hover { color: #D97706; } /* Amber-600 for hover */
-        .section-title { color: #047857; } /* Emerald-700 */
+        .section-title { color: #c7ff4d; } /* lime */
+        .glass { background: rgba(28, 28, 28, 0.9); backdrop-filter: blur(12px); }
+        .panel { background: #1b1b1b; border: 1px solid rgba(255, 255, 255, 0.06); }
+        .panel-soft { background: #232323; border: 1px solid rgba(255, 255, 255, 0.08); }
+        .pill { background: #2c2c2c; border: 1px solid rgba(255, 255, 255, 0.08); }
+        .accent-chip { background: linear-gradient(135deg, #c7ff4d, #ffa94d); color: #0f0f0f; }
     </style>
 </head>
-<body class="bg-stone-100 text-gray-800">
+<body class="bg-[#0b0b0b] text-slate-100">
 
-    <div class="container mx-auto p-4 max-w-6xl">
-        <header class="text-center py-8">
-            <h1 class="text-4xl font-bold text-teal-700">Mexico City Adventure Guide</h1>
-            <p class="text-lg text-gray-600 mt-2">Your interactive guide to the best of CDMX, curated from travel vlogs.</p>
-        </header>
+    <div class="min-h-screen bg-[#0b0b0b]">
+        <div class="max-w-7xl mx-auto px-6 py-6">
+            <div class="rounded-[36px] bg-[#0f0f0f] border border-[#1f1f1f] shadow-2xl shadow-black/50 overflow-hidden">
+                <div class="flex flex-col lg:flex-row">
+                    <aside class="w-full lg:w-24 bg-[#0a0a0a] border-b lg:border-b-0 lg:border-r border-[#1f1f1f]">
+                        <div class="flex lg:flex-col items-center justify-between lg:justify-start gap-6 px-4 py-6">
+                            <div class="flex items-center gap-3 lg:flex-col">
+                                <div class="h-12 w-12 rounded-full bg-white text-black flex items-center justify-center text-xl font-bold">CD</div>
+                                <div class="hidden lg:block text-xs uppercase tracking-[0.3em] text-slate-400">CDMX</div>
+                            </div>
+                            <div class="flex lg:flex-col items-center gap-4">
+                                <button class="h-10 w-10 rounded-full panel-soft flex items-center justify-center text-slate-200 hover:text-white">❤️</button>
+                                <button class="h-10 w-10 rounded-full panel-soft flex items-center justify-center text-slate-200 hover:text-white">🗺️</button>
+                                <button class="h-10 w-10 rounded-full panel-soft flex items-center justify-center text-slate-200 hover:text-white">🎟️</button>
+                                <button class="h-10 w-10 rounded-full panel-soft flex items-center justify-center text-slate-200 hover:text-white">⚙️</button>
+                            </div>
+                            <button class="h-12 w-12 rounded-full accent-chip text-xl font-semibold shadow-lg">+</button>
+                        </div>
+                    </aside>
 
-        <nav id="mainNav" class="bg-white shadow-md rounded-lg p-2 mb-8 flex flex-wrap justify-center space-x-1 sm:space-x-2">
-            <button data-target="home" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-active">🏠 Home</button>
-            <button data-target="eat" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">🍽️ Eat</button>
-            <button data-target="seeDo" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">🏞️ See & Do</button>
-            <button data-target="stay" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">🏨 Stay</button>
-            <button data-target="tips" class="nav-link text-sm sm:text-base py-2 px-3 sm:px-4 rounded-md hover:bg-teal-100 transition-colors nav-link-inactive">💡 Travel Tips</button>
-        </nav>
+                    <div class="flex-1 px-6 py-6 lg:px-10 lg:py-8">
+                        <header class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                            <div class="flex flex-wrap items-center gap-3">
+                                <button class="pill rounded-full px-5 py-2 text-sm font-medium text-slate-100">🏙️ City Guide</button>
+                                <button class="pill rounded-full px-5 py-2 text-sm font-medium text-slate-100">🍜 Culinary</button>
+                                <button class="pill rounded-full px-5 py-2 text-sm font-medium text-slate-100">🗺️ Neighborhoods</button>
+                                <button class="pill rounded-full px-5 py-2 text-sm font-medium text-slate-100">🎒 Essentials</button>
+                                <button class="h-10 w-10 rounded-full panel-soft flex items-center justify-center text-slate-200">🔍</button>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="panel rounded-full px-4 py-2 text-sm text-slate-200">Season: <span class="text-white font-semibold">Now</span></div>
+                                <div class="panel rounded-full px-4 py-2 text-sm text-slate-200">Mood: <span class="text-white font-semibold">Adventure</span></div>
+                                <div class="flex items-center gap-3 panel rounded-full px-3 py-2">
+                                    <div class="h-8 w-8 rounded-full bg-white/90 text-black flex items-center justify-center text-xs font-bold">CD</div>
+                                    <div class="text-sm">
+                                        <p class="text-white font-semibold leading-none">CDMX Planner</p>
+                                        <p class="text-xs text-slate-400">@culturallife</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </header>
 
-        <main id="contentArea">
-            <section id="home" class="content-section space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h2 class="text-2xl font-semibold section-title mb-4">Welcome to Your Mexico City Guide!</h2>
-                    <p class="text-gray-700 leading-relaxed">
-                        Mexico City is a vibrant metropolis brimming with history, art, incredible food, and unique cultural experiences. This guide synthesizes recommendations from various travelogues to help you plan an unforgettable trip. Explore different categories using the navigation above to discover top spots for dining, sightseeing, accommodation, and essential travel tips.
-                    </p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-xl font-semibold section-title mb-4">Recommendations Overview</h3>
-                    <p class="text-gray-700 mb-4">Here's a quick look at the number of curated recommendations available in each main category:</p>
-                    <div class="chart-container">
-                        <canvas id="recommendationsChart"></canvas>
-                    </div>
-                     <p class="text-sm text-gray-600 mt-4 text-center">This chart provides a visual summary of the diverse experiences awaiting you in Mexico City, based on the curated list in this guide. Use it to get a sense of the variety of options available as you plan your adventure!</p>
-                </div>
-            </section>
+                        <div class="mt-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                            <div>
+                                <p class="text-sm uppercase tracking-[0.3em] text-lime-300/70">Mexico City</p>
+                                <h1 class="headline text-4xl sm:text-5xl text-white mt-2">CHECK POINTS</h1>
+                                <p class="text-slate-400 mt-3 max-w-xl">A modern dashboard-style guide to CDMX dining, culture, and stay options—organized for quick exploration and planning.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="accent-chip rounded-full px-4 py-2 text-sm font-semibold">⭐ Michelin highlights</span>
+                                <span class="pill rounded-full px-4 py-2 text-sm text-slate-200">📍 Neighborhood focus</span>
+                                <span class="pill rounded-full px-4 py-2 text-sm text-slate-200">🎟️ Ticket links</span>
+                            </div>
+                        </div>
+
+                        <nav id="mainNav" class="mt-10 grid gap-3 md:grid-cols-5">
+                            <button data-target="home" class="nav-link panel rounded-2xl px-4 py-3 text-left text-sm font-semibold text-white border border-lime-300/40 shadow-lg shadow-black/30 nav-link-active">🏠 Home</button>
+                            <button data-target="eat" class="nav-link panel rounded-2xl px-4 py-3 text-left text-sm font-semibold text-slate-300 hover:text-white nav-link-inactive">🍽️ Eat</button>
+                            <button data-target="seeDo" class="nav-link panel rounded-2xl px-4 py-3 text-left text-sm font-semibold text-slate-300 hover:text-white nav-link-inactive">🏞️ See &amp; Do</button>
+                            <button data-target="stay" class="nav-link panel rounded-2xl px-4 py-3 text-left text-sm font-semibold text-slate-300 hover:text-white nav-link-inactive">🏨 Stay</button>
+                            <button data-target="tips" class="nav-link panel rounded-2xl px-4 py-3 text-left text-sm font-semibold text-slate-300 hover:text-white nav-link-inactive">💡 Travel Tips</button>
+                        </nav>
+
+                        <main id="contentArea" class="mt-6">
+                            <section id="home" class="content-section space-y-6">
+                                <div class="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
+                                    <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40">
+                                        <h2 class="text-xl font-semibold section-title mb-3">Welcome to Your Mexico City Guide</h2>
+                                        <p class="text-slate-300 leading-relaxed">
+                                            Mexico City is a vibrant metropolis brimming with history, art, incredible food, and unique cultural experiences. This guide synthesizes recommendations from various travelogues to help you plan an unforgettable trip. Explore different categories using the navigation above to discover top spots for dining, sightseeing, accommodation, and essential travel tips.
+                                        </p>
+                                        <div class="mt-6 grid gap-4 sm:grid-cols-3">
+                                            <div class="panel-soft rounded-2xl p-4">
+                                                <p class="text-xs uppercase text-slate-400">Top Picks</p>
+                                                <p class="text-2xl font-semibold text-white">38</p>
+                                                <p class="text-xs text-slate-400">Curated experiences</p>
+                                            </div>
+                                            <div class="panel-soft rounded-2xl p-4">
+                                                <p class="text-xs uppercase text-slate-400">Neighborhoods</p>
+                                                <p class="text-2xl font-semibold text-white">9</p>
+                                                <p class="text-xs text-slate-400">Focus areas</p>
+                                            </div>
+                                            <div class="panel-soft rounded-2xl p-4">
+                                                <p class="text-xs uppercase text-slate-400">Must Book</p>
+                                                <p class="text-2xl font-semibold text-white">7</p>
+                                                <p class="text-xs text-slate-400">Advance tickets</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40 space-y-4">
+                                        <h3 class="text-xl font-semibold section-title">Quick Trip Blueprint</h3>
+                                        <div class="space-y-4 text-sm text-slate-300">
+                                            <div class="flex items-start gap-3">
+                                                <span class="h-9 w-9 rounded-2xl accent-chip flex items-center justify-center">☀️</span>
+                                                <div>
+                                                    <p class="font-semibold text-white">Morning Flow</p>
+                                                    <p>Start with coffee + pastries in Roma or Condesa, then stroll nearby parks.</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-3">
+                                                <span class="h-9 w-9 rounded-2xl accent-chip flex items-center justify-center">🏛️</span>
+                                                <div>
+                                                    <p class="font-semibold text-white">Culture Block</p>
+                                                    <p>Pick one anchor museum or architecture tour and book ahead.</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start gap-3">
+                                                <span class="h-9 w-9 rounded-2xl accent-chip flex items-center justify-center">🌮</span>
+                                                <div>
+                                                    <p class="font-semibold text-white">Night Shift</p>
+                                                    <p>Balance street tacos with a reservation-only dinner or cocktail bar.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="rounded-2xl border border-lime-300/30 bg-[#1a1f12] p-4 text-sm text-lime-100">
+                                            <p class="font-semibold mb-1">Local tip</p>
+                                            <p>Build in buffer time between neighborhoods—CDMX traffic is real, but the views are worth it.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40">
+                                    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                                        <div>
+                                            <h3 class="text-xl font-semibold section-title">Recommendations Overview</h3>
+                                            <p class="text-slate-400 text-sm">See how your picks stack up across food, culture, and stays.</p>
+                                        </div>
+                                        <div class="flex flex-wrap gap-2 text-xs text-slate-300">
+                                            <span class="pill rounded-full px-3 py-1">Updated weekly</span>
+                                            <span class="pill rounded-full px-3 py-1">Based on vlogs</span>
+                                        </div>
+                                    </div>
+                                    <div class="chart-container mt-4">
+                                        <canvas id="recommendationsChart"></canvas>
+                                    </div>
+                                    <p class="text-xs text-slate-500 mt-3 text-center">Use the navigation to dive deeper into each curated list.</p>
+                                </div>
+                            </section>
 
             <section id="eat" class="content-section hidden space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow">
+                <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40">
                     <h2 class="text-2xl font-semibold section-title mb-4">Culinary Delights</h2>
-                    <p class="text-gray-700 leading-relaxed mb-6">
+                    <p class="text-slate-300 leading-relaxed mb-6">
                         Mexico City's food scene is legendary, from world-class bakeries and coffee shops to iconic street tacos and innovative restaurants. This section helps you navigate the diverse culinary landscape. Use the filters below to explore specific categories.
                     </p>
                     <div id="eatSubNav" class="flex flex-wrap justify-center gap-2 mb-6">
-                        <button data-subtarget="all" class="subnav-link bg-teal-600 text-white py-2 px-4 rounded-md text-sm hover:bg-teal-700 transition-colors">All Food</button>
-                        <button data-subtarget="Breakfast & Coffee" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Breakfast & Coffee</button>
-                        <button data-subtarget="Tacos & Street Food" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Tacos & Street Food</button>
-                        <button data-subtarget="Refined Dining" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Refined Dining</button>
-                        <button data-subtarget="Bars & Speakeasies" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Bars & Speakeasies</button>
+                        <button data-subtarget="all" class="subnav-link accent-chip py-2 px-4 rounded-full text-xs font-semibold shadow-lg">All Food</button>
+                        <button data-subtarget="Breakfast & Coffee" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Breakfast & Coffee</button>
+                        <button data-subtarget="Tacos & Street Food" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Tacos & Street Food</button>
+                        <button data-subtarget="Refined Dining" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Refined Dining</button>
+                        <button data-subtarget="Bars & Speakeasies" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Bars & Speakeasies</button>
                     </div>
                     <div id="eatContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         </div>
@@ -72,16 +187,16 @@
             </section>
 
             <section id="seeDo" class="content-section hidden space-y-6">
-                 <div class="bg-white p-6 rounded-lg shadow">
+                 <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40">
                     <h2 class="text-2xl font-semibold section-title mb-4">Culture & Experiences</h2>
-                    <p class="text-gray-700 leading-relaxed mb-6">
+                    <p class="text-slate-300 leading-relaxed mb-6">
                         Immerse yourself in Mexico City's rich culture, history, and vibrant arts scene. From world-renowned museums and ancient ruins to lively parks and unique local tours, there's an abundance of experiences to discover. Filter by interest below.
                     </p>
                     <div id="seeDoSubNav" class="flex flex-wrap justify-center gap-2 mb-6">
-                        <button data-subtarget="all" class="subnav-link bg-teal-600 text-white py-2 px-4 rounded-md text-sm hover:bg-teal-700 transition-colors">All Activities</button>
-                        <button data-subtarget="Art, History & Architecture" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Art, History & Architecture</button>
-                        <button data-subtarget="Parks & Urban Escapes" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Parks & Urban Escapes</button>
-                        <button data-subtarget="Unforgettable Adventures" class="subnav-link bg-gray-200 text-gray-700 py-2 px-4 rounded-md text-sm hover:bg-gray-300 transition-colors">Unforgettable Adventures</button>
+                        <button data-subtarget="all" class="subnav-link accent-chip py-2 px-4 rounded-full text-xs font-semibold shadow-lg">All Activities</button>
+                        <button data-subtarget="Art, History & Architecture" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Art, History & Architecture</button>
+                        <button data-subtarget="Parks & Urban Escapes" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Parks & Urban Escapes</button>
+                        <button data-subtarget="Unforgettable Adventures" class="subnav-link pill text-slate-200 py-2 px-4 rounded-full text-xs hover:text-white transition-colors">Unforgettable Adventures</button>
                     </div>
                     <div id="seeDoContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         </div>
@@ -89,9 +204,9 @@
             </section>
 
             <section id="stay" class="content-section hidden space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow">
+                <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40">
                     <h2 class="text-2xl font-semibold section-title mb-4">Accommodation Options</h2>
-                     <p class="text-gray-700 leading-relaxed mb-6">
+                     <p class="text-slate-300 leading-relaxed mb-6">
                         Finding the right place to stay is key to a great trip. Mexico City offers a range of accommodations, from unique loft apartments to charming boutique hotels. Here are some highlighted options to consider for your visit.
                     </p>
                     <div id="stayContent" class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -100,35 +215,35 @@
             </section>
 
             <section id="tips" class="content-section hidden space-y-6">
-                <div class="bg-white p-6 rounded-lg shadow">
+                <div class="panel rounded-3xl p-6 shadow-lg shadow-black/40">
                     <h2 class="text-2xl font-semibold section-title mb-4">Key Considerations & Travel Tips</h2>
-                    <p class="text-gray-700 leading-relaxed mb-4">
+                    <p class="text-slate-300 leading-relaxed mb-4">
                         To make the most of your Mexico City adventure, keep these practical tips in mind. They cover everything from culinary exploration to booking popular attractions, helping you navigate the city smoothly.
                     </p>
-                    <div id="tipsContent" class="space-y-4 text-gray-700">
-                        <div class="p-4 bg-amber-50 rounded-lg border border-amber-200">
-                            <h3 class="font-semibold text-amber-800 mb-1">Embrace Culinary Diversity:</h3>
-                            <p>Explore both renowned fine dining and authentic street food. Keep small denominations of pesos for cash-only street vendors.</p>
+                    <div id="tipsContent" class="space-y-4 text-slate-200">
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-lime-200 mb-1">Embrace Culinary Diversity:</h3>
+                            <p class="text-slate-300">Explore both renowned fine dining and authentic street food. Keep small denominations of pesos for cash-only street vendors.</p>
                         </div>
-                        <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
-                            <h3 class="font-semibold text-sky-800 mb-1">Plan Ahead for Popular Spots:</h3>
-                            <p>For highly acclaimed restaurants, bars (e.g., Handshake Speakeasy), and museums (e.g., Frida Kahlo Museum), secure reservations well in advance, especially during peak seasons.</p>
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-sky-200 mb-1">Plan Ahead for Popular Spots:</h3>
+                            <p class="text-slate-300">For highly acclaimed restaurants, bars (e.g., Handshake Speakeasy), and museums (e.g., Frida Kahlo Museum), secure reservations well in advance, especially during peak seasons.</p>
                         </div>
-                        <div class="p-4 bg-lime-50 rounded-lg border border-lime-200">
-                            <h3 class="font-semibold text-lime-800 mb-1">Be Prepared for Unique Access:</h3>
-                            <p>For exclusive architectural tours (e.g., Luis Barragán homes) or niche local spots, verify booking procedures, payment methods (some are cash-only), and any unique conditions.</p>
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-lime-200 mb-1">Be Prepared for Unique Access:</h3>
+                            <p class="text-slate-300">For exclusive architectural tours (e.g., Luis Barragán homes) or niche local spots, verify booking procedures, payment methods (some are cash-only), and any unique conditions.</p>
                         </div>
-                        <div class="p-4 bg-violet-50 rounded-lg border border-violet-200">
-                            <h3 class="font-semibold text-violet-800 mb-1">Consider Guided Tours:</h3>
-                            <p>For experiences like Lucha Libre, market explorations, or excursions to Teotihuacan and Xochimilco, reputable tour operators can streamline logistics and enhance understanding.</p>
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-purple-200 mb-1">Consider Guided Tours:</h3>
+                            <p class="text-slate-300">For experiences like Lucha Libre, market explorations, or excursions to Teotihuacan and Xochimilco, reputable tour operators can streamline logistics and enhance understanding.</p>
                         </div>
-                         <div class="p-4 bg-rose-50 rounded-lg border border-rose-200">
-                            <h3 class="font-semibold text-rose-800 mb-1">Leverage Online & Local Info:</h3>
-                            <p>While online platforms are useful, some local gems may have limited digital presence. Complement research with local inquiries for authentic discoveries.</p>
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-rose-200 mb-1">Leverage Online & Local Info:</h3>
+                            <p class="text-slate-300">While online platforms are useful, some local gems may have limited digital presence. Complement research with local inquiries for authentic discoveries.</p>
                         </div>
-                        <div class="p-4 bg-gray-100 rounded-lg border border-gray-300">
-                            <h3 class="font-semibold text-gray-800 mb-1">General Advice from Travelers:</h3>
-                            <ul class="list-disc list-inside space-y-1 pl-2">
+                        <div class="panel-soft p-4 rounded-2xl">
+                            <h3 class="font-semibold text-slate-100 mb-2">General Advice from Travelers:</h3>
+                            <ul class="list-disc list-inside space-y-1 pl-2 text-slate-300">
                                 <li>When visiting, remember you're a guest. Try to speak the language, support local businesses, and be respectful.</li>
                                 <li>Mexico City's shopping scene is amazing, with variety from trinkets to high-end items, especially in areas like Roma Norte.</li>
                                 <li>The city is vast; allow time for travel between neighborhoods.</li>
@@ -140,9 +255,13 @@
             </section>
         </main>
 
-        <footer class="text-center py-8 mt-12 border-t border-gray-300">
-            <p class="text-gray-600">&copy; <span id="currentYear"></span> Mexico City Travel Guide. Curated with care.</p>
+        <footer class="text-center py-10 mt-10 border-t border-[#1f1f1f] text-slate-400 text-sm">
+            <p>&copy; <span id="currentYear"></span> Mexico City Travel Guide. Curated with care.</p>
         </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -357,34 +476,34 @@
                 });
 
                 contentArea.innerHTML = itemsToDisplay.map(item => `
-                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
+                    <div class="panel-soft p-6 rounded-3xl shadow-lg shadow-black/40 hover:shadow-black/60 transition-shadow duration-300 flex flex-col justify-between">
                         <div>
-                            <h3 class="text-xl font-semibold text-teal-700 mb-2">${item.name} ${item.michelin ? '<span title="Michelin Mentioned/Rated">⭐</span>' : ''}</h3>
-                            ${item.subCategory ? `<p class="text-xs text-gray-500 uppercase tracking-wider mb-2">${item.subCategory.replace(/ & /g, ' &amp; ')}</p>` : ''}
-                            <p class="text-gray-700 mb-3 text-sm leading-relaxed">${item.description.replace(/ & /g, ' &amp; ')}</p>
-                            ${item.sourceQuote ? `<p class="text-sm text-amber-700 italic mb-3">"${item.sourceQuote.replace(/ & /g, ' &amp; ')}"</p>` : ''}
-                            ${item.address ? `<p class="text-sm text-gray-600 mb-1">📍 ${item.address.replace(/ & /g, ' &amp; ')}</p>` : ''}
+                            <h3 class="text-lg font-semibold text-white mb-2">${item.name} ${item.michelin ? '<span title="Michelin Mentioned/Rated">⭐</span>' : ''}</h3>
+                            ${item.subCategory ? `<p class="text-[11px] text-slate-400 uppercase tracking-wider mb-2">${item.subCategory.replace(/ & /g, ' &amp; ')}</p>` : ''}
+                            <p class="text-slate-300 mb-3 text-sm leading-relaxed">${item.description.replace(/ & /g, ' &amp; ')}</p>
+                            ${item.sourceQuote ? `<p class="text-sm text-lime-200 italic mb-3">"${item.sourceQuote.replace(/ & /g, ' &amp; ')}"</p>` : ''}
+                            ${item.address ? `<p class="text-sm text-slate-400 mb-1">📍 ${item.address.replace(/ & /g, ' &amp; ')}</p>` : ''}
                         </div>
                         <div class="mt-auto pt-3">
-                            ${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer" class="inline-block bg-amber-600 text-white text-xs py-2 px-3 rounded-md hover:bg-amber-700 transition-colors mr-2">🔗 Visit Website</a>` : ''}
-                            ${item.tickets ? `<a href="${item.tickets}" target="_blank" rel="noopener noreferrer" class="inline-block bg-sky-600 text-white text-xs py-2 px-3 rounded-md hover:bg-sky-700 transition-colors">🎟️ Book Tickets</a>` : ''}
-                            ${item.website2 ? `<a href="${item.website2}" target="_blank" rel="noopener noreferrer" class="inline-block bg-purple-600 text-white text-xs py-2 px-3 rounded-md hover:bg-purple-700 transition-colors">🔗 More Info</a>` : ''}
+                            ${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer" class="inline-block accent-chip text-xs py-2 px-3 rounded-full font-semibold mr-2">🔗 Visit Website</a>` : ''}
+                            ${item.tickets ? `<a href="${item.tickets}" target="_blank" rel="noopener noreferrer" class="inline-block pill text-slate-100 text-xs py-2 px-3 rounded-full hover:text-white transition-colors">🎟️ Book Tickets</a>` : ''}
+                            ${item.website2 ? `<a href="${item.website2}" target="_blank" rel="noopener noreferrer" class="inline-block pill text-slate-100 text-xs py-2 px-3 rounded-full hover:text-white transition-colors mt-2">🔗 More Info</a>` : ''}
                         </div>
                     </div>
                 `).join('');
 
                 if (itemsToDisplay.length === 0) {
-                    contentArea.innerHTML = `<p class="text-gray-600 col-span-full text-center">No recommendations found for this category/filter.</p>`;
+                    contentArea.innerHTML = `<p class="text-slate-400 col-span-full text-center">No recommendations found for this category/filter.</p>`;
                 }
             }
             
             function updateNavLinks(navContainer, clickedButton) {
                 navContainer.querySelectorAll('button').forEach(btn => {
-                    btn.classList.remove('bg-teal-600', 'text-white');
-                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                    btn.classList.remove('accent-chip');
+                    btn.classList.add('pill', 'text-slate-200');
                 });
-                clickedButton.classList.add('bg-teal-600', 'text-white');
-                clickedButton.classList.remove('bg-gray-200', 'text-gray-700');
+                clickedButton.classList.add('accent-chip');
+                clickedButton.classList.remove('pill', 'text-slate-200');
             }
 
             mainNav.addEventListener('click', (e) => {
